@@ -44,15 +44,40 @@ const PokemonPage = () => {
 
   return (
     <>
-      <div className="bg-blue-500">
-        <PokemonList
-          pokemon={pokemon}
-          loading={loading}
-          infoPokemon={(poke) => setPokeDex(poke)}
-        />
-      </div>
-      <div className="bg-blue-500">
-        <Cards data={pokeDex} />
+      <div className="flex flex-row">
+        <div className="bg-blue-500">
+          <PokemonList
+            pokemon={pokemon}
+            loading={loading}
+            Cards={(poke) => setPokeDex(poke)}
+          />
+          <div>
+            {prevUrl && (
+              <button
+                onClick={() => {
+                  setPokemon([]);
+                  setUrl(prevUrl);
+                }}
+              >
+                Previous
+              </button>
+            )}
+            {nextUrl && (
+              <button
+                onClick={() => {
+                  setPokemon([]);
+                  setUrl(nextUrl);
+                }}
+              >
+                Next
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-yellow-500 p-35">
+          <Cards data={pokeDex} />
+        </div>
       </div>
     </>
   );

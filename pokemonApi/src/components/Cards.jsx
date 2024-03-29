@@ -1,11 +1,12 @@
 const Cards = ({ data }) => {
+  console.log("🚀 ~ Cards ~ data:", data);
   return (
     <>
       {!data ? (
         ""
       ) : (
         <>
-          <h1>{data.className}</h1>
+          <h1>name {data.name}</h1>
           <img
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`}
           />

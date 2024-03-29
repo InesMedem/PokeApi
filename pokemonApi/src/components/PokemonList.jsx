@@ -1,6 +1,6 @@
 import Cards from "./Cards";
 
-const PokemonList = ({ pokemon, loading }) => {
+const PokemonList = ({ pokemon, loading, Cards }) => {
   console.log("🚀 ~ PokemonList ~ pokemon:", pokemon);
 
   return (
@@ -12,7 +12,7 @@ const PokemonList = ({ pokemon, loading }) => {
           return (
             <>
               <div key={item.id} onClick={() => Cards(item)}>
-                <h2>{item.name}</h2>
+                <h1 className="font-bold">{item.name}</h1>
 
                 <h2>{item.id}</h2>
                 <img src={item.sprites.other.dream_world.front_default} />

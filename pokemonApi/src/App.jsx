@@ -4,10 +4,7 @@ import PokemonPage from "./pages/PokemonPage";
 const App = () => {
   return (
     <>
-      <div>
-        <h1 className="bg-black">hi</h1>
-        <PokemonPage />
-      </div>
+      <PokemonPage />
     </>
   );
 
