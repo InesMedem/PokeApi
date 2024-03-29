@@ -1,7 +1,15 @@
+import "./index.css";
 import PokemonPage from "./pages/PokemonPage";
 
 const App = () => {
-  return <PokemonPage />;
+  return (
+    <>
+      <div>
+        <h1 className="bg-black">hi</h1>
+        <PokemonPage />
+      </div>
+    </>
+  );
 
   // const [currentPageUrl, setCurrentPageUrl] = useState(
   //   "https://pokeapi.co/api/v2/pokemon"

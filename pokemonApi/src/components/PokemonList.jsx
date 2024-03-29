@@ -11,7 +11,7 @@ const PokemonList = ({ pokemon, loading }) => {
         pokemon.map((item) => {
           return (
             <>
-              <div className="Card">
+              <div key={item.id} onClick={() => Cards(item)}>
                 <h2>{item.name}</h2>
 
                 <h2>{item.id}</h2>

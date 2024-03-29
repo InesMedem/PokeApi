@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PokemonList from "../components/PokemonList";
+import Cards from "../components/Cards";
 
 const PokemonPage = () => {
   const [pokemon, setPokemon] = useState([]);
@@ -10,16 +11,20 @@ const PokemonPage = () => {
   const [prevUrl, setPrevUrl] = useState();
   const [pokeDex, setPokeDex] = useState();
 
-  const pokeFun = async () => {
+  //* responsible for fetching a LIST of Pokémon data from an API.
+
+  const fetchPokemonData = async () => {
     setLoading(true);
     const res = await axios.get(url);
-    // console.log("🚀 ~ pokeFun ~ res:", res.data.results);
+    // console.log("🚀 ~ fetchPokemonData ~ res:", res.data.results);
     setNextUrl(res.data.next);
     setPrevUrl(res.data.previous);
     getPokemon(res.data.results);
     setLoading(false);
     // console.log(pokemon);
   };
+
+  //* takes an array of Pokémon data (res) as input. Responsible for fetching INDIVIDUAL Pokémon data and updating the state with each Pokémon's information.
 
   const getPokemon = async (res) => {
     res.map(async (item) => {
@@ -34,15 +39,22 @@ const PokemonPage = () => {
   };
 
   useEffect(() => {
-    pokeFun();
+    fetchPokemonData();
   }, [url]);
 
   return (
-    <PokemonList
-      pokemon={pokemon}
-      loading={loading}
-      infoPokemon={(poke) => setPokeDex(poke)}
-    />
+    <>
+      <div className="bg-blue-500">
+        <PokemonList
+          pokemon={pokemon}
+          loading={loading}
+          infoPokemon={(poke) => setPokeDex(poke)}
+        />
+      </div>
+      <div className="bg-blue-500">
+        <Cards data={pokeDex} />
+      </div>
+    </>
   );
 };
 
