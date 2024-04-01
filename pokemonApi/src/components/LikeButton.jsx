@@ -1,9 +1,7 @@
-import React from "react";
-
-const LikeButton = () => {
+const LikeButton = ({ isLiked, onToggleLike }) => {
   return (
     <>
-      <button>Like</button>
+      <button onClick={onToggleLike}>{isLiked ? "Unlike" : "Like"}</button>
     </>
   );
 };

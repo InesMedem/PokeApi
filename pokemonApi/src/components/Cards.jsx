@@ -1,6 +1,30 @@
+import { useEffect, useState } from "react";
 import LikeButton from "./LikeButton";
 
 const Cards = ({ data }) => {
+  const [likedPokemons, setLikedPokemons] = useState({});
+
+  useEffect(() => {
+    const storedLikedPokemons = JSON.parse(
+      localStorage.getItem("likedPokemons")
+    );
+    if (storedLikedPokemons) {
+      setLikedPokemons(storedLikedPokemons);
+    }
+  }, []);
+
+  const handleToggleLike = (pokemonId) => {
+    setLikedPokemons((prevLikedPokemons) => {
+      const updatedLikedPokemons = { ...prevLikedPokemons };
+      updatedLikedPokemons[pokemonId] = !updatedLikedPokemons[pokemonId];
+      localStorage.setItem(
+        "likedPokemons",
+        JSON.stringify(updatedLikedPokemons)
+      );
+      return updatedLikedPokemons;
+    });
+  };
+
   return (
     <>
       {!data ? (
@@ -22,7 +46,10 @@ const Cards = ({ data }) => {
             <h3>defense: 43</h3>
             <h3>special-attack: 43</h3>
             <h3>speed: 43</h3>
-            <LikeButton />
+            <LikeButton
+              isLiked={likedPokemons[data.id]}
+              onToggleLike={() => handleToggleLike(data.id)}
+            />
           </div>
         </>
       )}
