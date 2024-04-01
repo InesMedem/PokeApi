@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PokemonList from "../components/PokemonList";
 import Cards from "../components/Cards";
+import Pagination from "../components/Pagination";
 
 const PokemonPage = () => {
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon");
   const [nextUrl, setNextUrl] = useState();
   const [prevUrl, setPrevUrl] = useState();
+  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon");
   const [pokeDex, setPokeDex] = useState();
 
   //* responsible for fetching a LIST of Pokémon data from an API.
@@ -16,12 +17,10 @@ const PokemonPage = () => {
   const fetchPokemonData = async () => {
     setLoading(true);
     const res = await axios.get(url);
-    // console.log("🚀 ~ fetchPokemonData ~ res:", res.data.results);
     setNextUrl(res.data.next);
     setPrevUrl(res.data.previous);
     getPokemon(res.data.results);
     setLoading(false);
-    // console.log(pokemon);
   };
 
   //* takes an array of Pokémon data (res) as input. Responsible for fetching INDIVIDUAL Pokémon data and updating the state with each Pokémon's information.
@@ -29,7 +28,6 @@ const PokemonPage = () => {
   const getPokemon = async (res) => {
     res.map(async (item) => {
       const result = await axios.get(item.url);
-      // console.log("🚀 ~ res.map ~ result:", result.data);
       setPokemon((state) => {
         state = [...state, result.data];
         state.sort((a, b) => (a.id > b.id ? 1 : -1));
@@ -51,29 +49,13 @@ const PokemonPage = () => {
             loading={loading}
             Cards={(poke) => setPokeDex(poke)}
           />
-          <div>
-            {prevUrl && (
-              <button
-                onClick={() => {
-                  setPokemon([]);
-                  setUrl(prevUrl);
-                }}
-              >
-                Previous
-              </button>
-            )}
-            {nextUrl && (
-              <button
-                onClick={() => {
-                  setPokemon([]);
-                  setUrl(nextUrl);
-                }}
-              >
-                Next
-              </button>
-            )}
-          </div>
         </div>
+        <Pagination
+          setPokemon={setPokemon}
+          setUrl={setUrl}
+          nextUrl={nextUrl}
+          prevUrl={prevUrl}
+        />
 
         <div className="bg-yellow-500 p-35">
           <Cards data={pokeDex} />
@@ -100,7 +82,6 @@ export default PokemonPage;
 
 //   const fetchPokemon = async (id) => {
 //     const res = await getByIdPokemon(id);
-//     console.log("🚀 ~ fetchPokemon ~ id:", id);
 //     const pokemonData = res.data;
 //     return pokemonData;
 //   };

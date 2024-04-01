@@ -1,8 +1,26 @@
-const Pagination = ({ gotoNextPage, gotoPrevPage }) => {
+const Pagination = ({ setPokemon, setUrl, nextUrl, prevUrl }) => {
   return (
     <div>
-      {gotoPrevPage && <button onClick={gotoPrevPage}>Previous</button>}
-      {gotoNextPage && <button onAuxClick={gotoNextPage}>Next</button>}
+      {prevUrl && (
+        <button
+          onClick={() => {
+            setPokemon([]);
+            setUrl(prevUrl);
+          }}
+        >
+          Previous
+        </button>
+      )}
+      {nextUrl && (
+        <button
+          onClick={() => {
+            setPokemon([]);
+            setUrl(nextUrl);
+          }}
+        >
+          Next
+        </button>
+      )}
     </div>
   );
 };
