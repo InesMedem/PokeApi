@@ -1,3 +1,5 @@
+import LikeButton from "./LikeButton";
+
 const Cards = ({ data }) => {
   return (
     <>
@@ -20,6 +22,7 @@ const Cards = ({ data }) => {
             <h3>defense: 43</h3>
             <h3>special-attack: 43</h3>
             <h3>speed: 43</h3>
+            <LikeButton />
           </div>
         </>
       )}

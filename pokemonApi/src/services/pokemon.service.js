@@ -3,12 +3,17 @@ import axios from "axios";
 //* responsible for fetching a LIST of Pokémon data from an API.
 
 export const fetchPokemonData = async (url) => {
-  const res = await axios.get(url);
-  return {
-    nextUrl: res.data.next,
-    prevUrl: res.data.previous,
-    results: res.data.results,
-  };
+  try {
+    const res = await axios.get(url);
+    return {
+      nextUrl: res.data.next,
+      prevUrl: res.data.previous,
+      results: res.data.results,
+    };
+  } catch (error) {
+    console.error("Error fetching Pokémon data:", error);
+    throw error;
+  }
 };
 
 //* takes an array of Pokémon data (res) as input. Responsible for fetching INDIVIDUAL Pokémon data and updating the state with each Pokémon's information.

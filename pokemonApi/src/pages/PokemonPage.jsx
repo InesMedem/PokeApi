@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { fetchPokemonData, getPokemon } from "../services/pokemon.service";
 import PokemonList from "../components/PokemonList";
 import Cards from "../components/Cards";
 import Pagination from "../components/Pagination";
-import { fetchPokemonData, getPokemon } from "../services/pokemon.service";
 
 const PokemonPage = () => {
   const [pokemon, setPokemon] = useState([]);
@@ -22,7 +22,7 @@ const PokemonPage = () => {
       setPokemon(fetchedPokemon);
       setLoading(false);
     };
-    fetchData();
+    fetchData(); // Fetch data when component mounts
   }, [url]);
 
   return (
