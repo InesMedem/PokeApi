@@ -1,5 +1,4 @@
 const Cards = ({ data }) => {
-  console.log("🚀 ~ Cards ~ data:", data);
   return (
     <>
       {!data ? (

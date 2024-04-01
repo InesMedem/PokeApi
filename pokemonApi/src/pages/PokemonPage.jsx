@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import PokemonList from "../components/PokemonList";
 import Cards from "../components/Cards";
 import Pagination from "../components/Pagination";
+import { fetchPokemonData, getPokemon } from "../services/pokemon.service";
 
 const PokemonPage = () => {
   const [pokemon, setPokemon] = useState([]);
@@ -12,32 +12,17 @@ const PokemonPage = () => {
   const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon");
   const [pokeDex, setPokeDex] = useState();
 
-  //* responsible for fetching a LIST of Pokémon data from an API.
-
-  const fetchPokemonData = async () => {
-    setLoading(true);
-    const res = await axios.get(url);
-    setNextUrl(res.data.next);
-    setPrevUrl(res.data.previous);
-    getPokemon(res.data.results);
-    setLoading(false);
-  };
-
-  //* takes an array of Pokémon data (res) as input. Responsible for fetching INDIVIDUAL Pokémon data and updating the state with each Pokémon's information.
-
-  const getPokemon = async (res) => {
-    res.map(async (item) => {
-      const result = await axios.get(item.url);
-      setPokemon((state) => {
-        state = [...state, result.data];
-        state.sort((a, b) => (a.id > b.id ? 1 : -1));
-        return state;
-      });
-    });
-  };
-
   useEffect(() => {
-    fetchPokemonData();
+    const fetchData = async () => {
+      setLoading(true);
+      const { nextUrl, prevUrl, results } = await fetchPokemonData(url);
+      setNextUrl(nextUrl);
+      setPrevUrl(prevUrl);
+      const fetchedPokemon = await getPokemon(results);
+      setPokemon(fetchedPokemon);
+      setLoading(false);
+    };
+    fetchData();
   }, [url]);
 
   return (
@@ -66,22 +51,3 @@ const PokemonPage = () => {
 };
 
 export default PokemonPage;
-
-// useEffect(() => {
-//   axios
-//     .get(`https://pokeapi.co/api/v2/pokemon`)
-//     .then((res) => setPokemon(res.data.results.map((p) => p.name)))
-//     .catch((err) => {
-//       return;
-//     });
-// }, [url]);
-
-//   axios.get("https://pokeapi.co/api/v2/pokemon").then((res) => {
-//     setPokemon(res.data.results.map((p) => p.name));
-//   });
-
-//   const fetchPokemon = async (id) => {
-//     const res = await getByIdPokemon(id);
-//     const pokemonData = res.data;
-//     return pokemonData;
-//   };

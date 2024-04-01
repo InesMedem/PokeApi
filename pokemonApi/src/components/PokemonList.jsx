@@ -1,8 +1,4 @@
-import Cards from "./Cards";
-
 const PokemonList = ({ pokemon, loading, Cards }) => {
-  console.log("🚀 ~ PokemonList ~ pokemon:", pokemon);
-
   return (
     <>
       {loading ? (
