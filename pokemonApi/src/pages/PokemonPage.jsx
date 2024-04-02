@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { getByIdPokemon } from "../services/pokemon.service";
 import LikeButton from "../components/LikeButton";
+import SearchFunction from "../components/SearchFunction";
 
-const PokemonPageV2 = () => {
+const PokemonPage = () => {
   const [pokemon, setPokemon] = useState([]);
   //* pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,9 +48,7 @@ const PokemonPageV2 = () => {
   return (
     <>
       <div className="flex flex-col items-center m-6 justify">
-        <h1 className="bg-pink-500">FIND POKEMONS</h1>
-        <div>Filters</div>
-        <input className="bg-gray-200 m-5" />
+        <SearchFunction />
         <div className="flex flex-wrap p-4">
           {pokemon.map(({ id, name, sprites }) => {
             return (
@@ -79,4 +78,4 @@ const PokemonPageV2 = () => {
   );
 };
 
-export default PokemonPageV2;
+export default PokemonPage;
