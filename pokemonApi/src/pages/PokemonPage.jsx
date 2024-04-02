@@ -1,56 +1,82 @@
 import { useState, useEffect } from "react";
-import { fetchPokemonData, getPokemon } from "../services/pokemon.service";
-import PokemonList from "../components/PokemonList";
-import Cards from "../components/Cards";
-import Pagination from "../components/Pagination";
-import SearchFunction from "../components/SearchFunction";
+import { getByIdPokemon } from "../services/pokemon.service";
+import LikeButton from "../components/LikeButton";
 
-const PokemonPage = () => {
+const PokemonPageV2 = () => {
   const [pokemon, setPokemon] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [nextUrl, setNextUrl] = useState();
-  const [prevUrl, setPrevUrl] = useState();
-  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon");
-  const [pokeDex, setPokeDex] = useState();
-  const [data, setData] = useState([]); // Your data state
+  //* pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pokemonsPerPage = 20; // Number of pokemons per page
+  const totalPokemon = 1118; // Total number of pokemons in the API
+
+  //* likeButton
+  const [likedPokemons, setLikedPokemons] = useState({});
+
+  //! --------------------PAGINATION ----------------
+  const fetchData = async () => {
+    const startIndex = (currentPage - 1) * pokemonsPerPage + 1;
+    const endIndex = Math.min(startIndex + pokemonsPerPage - 1, totalPokemon);
+    const pokemonData = [];
+    for (let i = startIndex; i <= endIndex; i++) {
+      const pokemonInfo = await getByIdPokemon(i);
+      pokemonData.push(pokemonInfo);
+    }
+    setPokemon(pokemonData);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const { nextUrl, prevUrl, results } = await fetchPokemonData(url);
-      setNextUrl(nextUrl);
-      setPrevUrl(prevUrl);
-      const fetchedPokemon = await getPokemon(results);
-      setPokemon(fetchedPokemon);
-      setLoading(false);
-    };
-    fetchData(); // Fetch data when component mounts
-  }, [url]);
+    fetchData();
+  }, [currentPage]);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(totalPokemon / pokemonsPerPage);
+
+  // Generate page numbers
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
+  // Handle page click
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+
+  //! --------------------LIKE  ----------------
 
   return (
     <>
-      <div className="flex row justify-center">
-        <div className="bg-blue-500 p-10">
-          <SearchFunction data={data} setData={setData} />
-          <PokemonList
-            pokemon={pokemon}
-            loading={loading}
-            Cards={(poke) => setPokeDex(poke)}
-          />
-          <Pagination
-            setPokemon={setPokemon}
-            setUrl={setUrl}
-            nextUrl={nextUrl}
-            prevUrl={prevUrl}
-          />
+      <div className="flex flex-col items-center m-6 justify">
+        <h1 className="bg-pink-500">FIND POKEMONS</h1>
+        <div>Filters</div>
+        <input className="bg-gray-200 m-5" />
+        <div className="flex flex-wrap p-4">
+          {pokemon.map(({ id, name, sprites }) => {
+            return (
+              <div key={id}>
+                <img src={sprites.front_default} alt={name} />
+                <h2>{name}</h2>
+                <LikeButton />
+                <button className="btn btn-blue">+ Info</button>
+              </div>
+            );
+          })}
         </div>
 
-        <div className="bg-yellow-500 p-20">
-          <Cards data={pokeDex} />
+        <div>
+          {pageNumbers.map((page) => (
+            <button
+              className="btn"
+              key={page}
+              onClick={() => handlePageClick(page)}
+            >
+              {page}
+            </button>
+          ))}
         </div>
       </div>
     </>
   );
 };
 
-export default PokemonPage;
+export default PokemonPageV2;
