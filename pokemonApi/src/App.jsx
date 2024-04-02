@@ -1,10 +1,12 @@
 import "./index.css";
 import PokemonPage from "./pages/PokemonPage";
+import PokemonPageV2 from "./pages/PokemonPageV2";
 
 const App = () => {
   return (
     <>
-      <PokemonPage />
+      {/* <PokemonPage /> */}
+      <PokemonPageV2 />
     </>
   );
 

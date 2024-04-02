@@ -31,26 +31,26 @@ const Cards = ({ data }) => {
         ""
       ) : (
         <>
-          <h1>name {data.name}</h1>
+          <h1 className="font-bold capitalize">{data.name}</h1>
           <img
+            className="w-26 h-26"
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`}
           />
-          <div className="abilities">
-            <div className="group">
-              <h2>blaze</h2>
-            </div>
-          </div>
-          <div className="base-state">
-            <h3>Hp: 30</h3>
-            <h3>attack: 52</h3>
-            <h3>defense: 43</h3>
-            <h3>special-attack: 43</h3>
-            <h3>speed: 43</h3>
-            <LikeButton
-              isLiked={likedPokemons[data.id]}
-              onToggleLike={() => handleToggleLike(data.id)}
-            />
-          </div>
+          <h3 className="font-bold">Species:</h3> {}
+          <h3 className="font-bold">Height:</h3> {data.height} decimetres
+          <h3 className="font-bold">Weight:</h3> {data.weight} hectograms
+          <h2 className="font-bold">Abilities:</h2>
+          {data.abilities.map((ability, index) => (
+            <li key={index}>{ability.ability.name} </li>
+          ))}
+          <h2 className="font-bold">Moves:</h2>
+          {data.moves.slice(0, 3).map((moves, index) => (
+            <li key={index}>{moves.move.name}</li>
+          ))}
+          <LikeButton
+            isLiked={likedPokemons[data.id]}
+            onToggleLike={() => handleToggleLike(data.id)}
+          />
         </>
       )}
     </>

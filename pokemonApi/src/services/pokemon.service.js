@@ -1,4 +1,5 @@
 import axios from "axios";
+import { axiosUtil } from "../utils/axiosUtil";
 
 //* responsible for fetching a LIST of Pokémon data from an API.
 
@@ -24,6 +25,15 @@ export const getPokemon = async (pokemonArray) => {
     return result.data;
   });
   return Promise.all(pokemonPromises);
+};
+
+export const getByIdPokemon = async (id) => {
+  const optionsRequest = {
+    method: "GET",
+    url: `https://pokeapi.co/api/v2/pokemon/${id}`,
+  };
+
+  return await axiosUtil(optionsRequest);
 };
 
 // export const getByIdPokemon = async (id) => {
