@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { getByIdPokemon, getByTypePokemon } from "../services/pokemon.service";
+import typeColors from "../utils/typeColors";
+
+//* Components
 import LikeButton from "../components/LikeButton";
 import SearchFunction from "../components/SearchFunction";
 import FilterPokemon from "../components/FilterPokemon";
@@ -123,7 +126,10 @@ const PokemonPage = () => {
               <div
                 key={id}
                 onClick={() => handlePokemonClick(id)}
-                style={{ cursor: "pointer" }}
+                style={{
+                  cursor: "pointer",
+                  backgroundColor: typeColors[types[0].type.name].color,
+                }}
               >
                 <img src={sprites.front_default} alt={name} />
                 <h2>{name}</h2>

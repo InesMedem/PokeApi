@@ -5,16 +5,22 @@ const Pokedex = ({ selectedPokemon }) => {
     <>
       {selectedPokemon && (
         <div
-          className="bg-cover bg-gray-400"
-          style={{ backgroundImage: `url(${pokedexImage})` }}
+          className="bg-cover w-full h-96"
+          // style={{ backgroundImage: `url(${pokedexImage})` }}
         >
-          <h2>name:{selectedPokemon.name}</h2>
+          <h2>{selectedPokemon.name}</h2>
           <img
-            src={selectedPokemon.sprites.front_default}
+            src={selectedPokemon.sprites.other.showdown.front_default}
             alt={selectedPokemon.name}
           />
-          <p></p>
-          <p></p>
+          <p>
+            {selectedPokemon.types.map((type, i) => (
+              <li key={i}>{type.type.name}</li>
+            ))}
+          </p>
+          <p>weight</p>
+          <p>height</p>
+          <p>height</p>
         </div>
       )}
     </>
