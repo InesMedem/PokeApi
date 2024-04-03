@@ -112,13 +112,13 @@ const PokemonPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center m-6 justify">
+      <div className="flex flex-col">
         <FilterPokemon types={types} />
         <SearchFunction setSearchQuery={setSearchQuery} />
 
         <Pokedex selectedPokemon={selectedPokemon} />
 
-        <div className="flex flex-wrap p-4">
+        <div className="flex flex-wrap p-4 justify-center">
           {searchResults.map(({ id, name, sprites, types }) => {
             const isLiked = likedPokemons[id] || false;
             const pokemonTypes = types.map(({ type }) => type.name).join(", ");
@@ -126,9 +126,12 @@ const PokemonPage = () => {
               <div
                 key={id}
                 onClick={() => handlePokemonClick(id)}
+                className="p-8 m-4 "
                 style={{
                   cursor: "pointer",
                   backgroundColor: typeColors[types[0].type.name].color,
+                  border: "black 5px solid",
+                  // color: typeColors[types[1].type.name].color,
                 }}
               >
                 <img src={sprites.front_default} alt={name} />
@@ -142,6 +145,7 @@ const PokemonPage = () => {
             );
           })}
         </div>
+
         <Pagination
           pageNumbers={pageNumbers}
           handlePageClick={handlePageClick}
