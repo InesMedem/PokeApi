@@ -4,33 +4,29 @@ import LikeButton from "../components/LikeButton";
 import SearchFunction from "../components/SearchFunction";
 import FilterPokemon from "../components/FilterPokemon";
 import Pokedex from "../components/Pokedex";
+import Pagination from "../components/Pagination";
 
 const PokemonPage = () => {
-  const [pokemon, setPokemon] = useState([]);
+  //* FilterPokemon
+  const [types, setTypes] = useState([]);
 
-  //* pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const pokemonsPerPage = 100;
-  const totalPokemon = 1118;
-  //* likeButton
-  const [likedPokemons, setLikedPokemons] = useState({});
-
-  //* Search
+  //* SearchFunction
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  //* type filters
-  const [types, setTypes] = useState([]);
-
-  //* pokedex
+  //* Pokedex (detail)
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  //! -------------------- POKEDEX ----------------
+  //* Pokemons (grid)
+  const [pokemon, setPokemon] = useState([]);
 
-  const handlePokemonClick = async (id) => {
-    const selected = await getByIdPokemon(id);
-    setSelectedPokemon(selected);
-  };
+  //* likeButton
+  const [likedPokemons, setLikedPokemons] = useState({});
+
+  //* Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pokemonsPerPage = 100;
+  const totalPokemon = 1118;
 
   //! -------------------- TYPE ----------------
 
@@ -51,6 +47,32 @@ const PokemonPage = () => {
     );
     setSearchResults(filteredData);
   }, [searchQuery, pokemon]);
+
+  //! -------------------- POKEDEX ----------------
+
+  const handlePokemonClick = async (id) => {
+    const selected = await getByIdPokemon(id);
+    setSelectedPokemon(selected);
+  };
+
+  //! -------------------- LIKE  ----------------
+
+  useEffect(() => {
+    const savedLikedPokemons = localStorage.getItem("likedPokemons");
+    if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
+  }, []);
+
+  const handleToggleLike = (id) => {
+    setLikedPokemons((prevLikedPokemons) => {
+      const isLiked = prevLikedPokemons[id];
+      const updatedLikedPokemons = { ...prevLikedPokemons, [id]: !isLiked };
+      localStorage.setItem(
+        "likedPokemons",
+        JSON.stringify(updatedLikedPokemons)
+      );
+      return updatedLikedPokemons;
+    });
+  };
 
   //! -------------------- PAGINATION ----------------
 
@@ -83,25 +105,6 @@ const PokemonPage = () => {
     setCurrentPage(page);
   };
 
-  //! -------------------- LIKE  ----------------
-
-  useEffect(() => {
-    const savedLikedPokemons = localStorage.getItem("likedPokemons");
-    if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
-  }, []);
-
-  const handleToggleLike = (id) => {
-    setLikedPokemons((prevLikedPokemons) => {
-      const isLiked = prevLikedPokemons[id];
-      const updatedLikedPokemons = { ...prevLikedPokemons, [id]: !isLiked };
-      localStorage.setItem(
-        "likedPokemons",
-        JSON.stringify(updatedLikedPokemons)
-      );
-      return updatedLikedPokemons;
-    });
-  };
-
   //! -------------------- RETURN  ----------------
 
   return (
@@ -129,23 +132,14 @@ const PokemonPage = () => {
                   isLiked={isLiked}
                   onToggleLike={() => handleToggleLike(id)}
                 />
-                {/* <button className="btn btn-blue">+ Info</button> */}
               </div>
             );
           })}
         </div>
-
-        <div>
-          {pageNumbers.map((page) => (
-            <button
-              className="btn"
-              key={page}
-              onClick={() => handlePageClick(page)}
-            >
-              {page}
-            </button>
-          ))}
-        </div>
+        <Pagination
+          pageNumbers={pageNumbers}
+          handlePageClick={handlePageClick}
+        />
       </div>
     </>
   );
