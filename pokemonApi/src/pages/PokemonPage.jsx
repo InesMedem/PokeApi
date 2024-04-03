@@ -113,7 +113,7 @@ const PokemonPage = () => {
         <FilterPokemon types={types} />
         <SearchFunction setSearchQuery={setSearchQuery} />
 
-        <Pokedex />
+        <Pokedex selectedPokemon={selectedPokemon} />
 
         <div className="flex flex-wrap p-4">
           {searchResults.map(({ id, name, sprites, types }) => {

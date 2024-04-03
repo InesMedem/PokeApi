@@ -1,14 +1,22 @@
 import pokedexImage from "../public/pokedex.png";
 
-const Pokedex = ({ id }) => {
+const Pokedex = ({ selectedPokemon }) => {
   return (
     <>
-      <div
-        className="w-200 h-200 bg-cover bg-gray-400"
-        style={{ backgroundImage: `url(${pokedexImage})` }}
-      >
-        <h2>{id}</h2>
-      </div>
+      {selectedPokemon && (
+        <div
+          className="bg-cover bg-gray-400"
+          style={{ backgroundImage: `url(${pokedexImage})` }}
+        >
+          <h2>name:{selectedPokemon.name}</h2>
+          <img
+            src={selectedPokemon.sprites.front_default}
+            alt={selectedPokemon.name}
+          />
+          <p></p>
+          <p></p>
+        </div>
+      )}
     </>
   );
 };
