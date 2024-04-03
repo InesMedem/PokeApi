@@ -14,7 +14,22 @@ const PokemonPage = () => {
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
 
-  //! --------------------PAGINATION ----------------
+  //* Search
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  //! -------------------- SEARCH ----------------
+
+  useEffect(() => {
+    // Filter data based on the search query
+    const filteredData = pokemon.filter((item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    // Update the search results
+    setSearchResults(filteredData);
+  }, [searchQuery, pokemon]);
+
+  //! -------------------- PAGINATION ----------------
 
   const fetchData = async () => {
     const startIndex = (currentPage - 1) * pokemonsPerPage + 1;
@@ -45,7 +60,7 @@ const PokemonPage = () => {
     setCurrentPage(page);
   };
 
-  //! --------------------LIKE  ----------------
+  //! -------------------- LIKE  ----------------
 
   useEffect(() => {
     const savedLikedPokemons = localStorage.getItem("likedPokemons");
@@ -64,14 +79,14 @@ const PokemonPage = () => {
     });
   };
 
-  //! --------------------LIKE  ----------------
+  //! -------------------- RETURN  ----------------
 
   return (
     <>
       <div className="flex flex-col items-center m-6 justify">
-        <SearchFunction />
+        <SearchFunction setSearchQuery={setSearchQuery} />
         <div className="flex flex-wrap p-4">
-          {pokemon.map(({ id, name, sprites }) => {
+          {searchResults.map(({ id, name, sprites }) => {
             const isLiked = likedPokemons[id] || false;
             return (
               <div key={id}>

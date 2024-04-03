@@ -1,26 +1,15 @@
-import { useEffect, useState } from "react";
-
-const SearchFunction = ({ data, setData }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-
+const SearchFunction = ({ setSearchQuery }) => {
   const handleSearch = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    // Filter data based on the search query
-    const filteredData = data.filter((item) =>
-      item.name.toLowerCase().includes(query.toLowerCase())
-    );
-    // Update the displayed data with the filtered results
-    setData(filteredData);
+    setSearchQuery(e.target.value);
   };
 
   return (
     <div>
       <input
+        className="btn"
         type="text"
-        value={searchQuery}
         onChange={handleSearch}
-        placeholder="Search..."
+        placeholder="Search a Pokemon..."
       />
     </div>
   );
