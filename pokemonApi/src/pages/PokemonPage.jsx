@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { getByIdPokemon } from "../services/pokemon.service";
+import { getByIdPokemon, getByTypePokemon } from "../services/pokemon.service";
 import LikeButton from "../components/LikeButton";
 import SearchFunction from "../components/SearchFunction";
+import FilterPokemon from "../components/FilterPokemon";
 
 const PokemonPage = () => {
   const [pokemon, setPokemon] = useState([]);
+  // console.log("🚀 ~ PokemonPage ~ pokemon:", pokemon);
 
   //* pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const pokemonsPerPage = 20; // Number of pokemons per page
+  const pokemonsPerPage = 100; // Number of pokemons per page
   const totalPokemon = 1118; // Total number of pokemons in the API
 
   //* likeButton
@@ -17,6 +19,20 @@ const PokemonPage = () => {
   //* Search
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+
+  //* type filters
+  const [types, setTypes] = useState([]);
+
+  //! -------------------- TYPE ----------------
+
+  const fetchPokemonTypes = async () => {
+    const typesData = await getByTypePokemon();
+    setTypes(typesData);
+  };
+
+  useEffect(() => {
+    fetchPokemonTypes();
+  }, []);
 
   //! -------------------- SEARCH ----------------
 
@@ -84,6 +100,7 @@ const PokemonPage = () => {
   return (
     <>
       <div className="flex flex-col items-center m-6 justify">
+        <FilterPokemon types={types} />
         <SearchFunction setSearchQuery={setSearchQuery} />
         <div className="flex flex-wrap p-4">
           {searchResults.map(({ id, name, sprites }) => {
@@ -92,6 +109,7 @@ const PokemonPage = () => {
               <div key={id}>
                 <img src={sprites.front_default} alt={name} />
                 <h2>{name}</h2>
+                <h2>Type: {}</h2>
                 <LikeButton
                   isLiked={isLiked}
                   onToggleLike={() => handleToggleLike(id)}
