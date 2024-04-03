@@ -47,10 +47,20 @@ const PokemonPage = () => {
 
   //! --------------------LIKE  ----------------
 
+  useEffect(() => {
+    const savedLikedPokemons = localStorage.getItem("likedPokemons");
+    if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
+  }, []);
+
   const handleToggleLike = (id) => {
     setLikedPokemons((prevLikedPokemons) => {
       const isLiked = prevLikedPokemons[id];
-      return { ...prevLikedPokemons, [id]: !isLiked };
+      const updatedLikedPokemons = { ...prevLikedPokemons, [id]: !isLiked };
+      localStorage.setItem(
+        "likedPokemons",
+        JSON.stringify(updatedLikedPokemons)
+      );
+      return updatedLikedPokemons;
     });
   };
 
