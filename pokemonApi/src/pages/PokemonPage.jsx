@@ -22,6 +22,16 @@ const PokemonPage = () => {
   //* type filters
   const [types, setTypes] = useState([]);
 
+  //* pokedex
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+
+  //! -------------------- POKEDEX ----------------
+
+  const handlePokemonClick = async (id) => {
+    const selected = await getByIdPokemon(id);
+    setSelectedPokemon(selected);
+  };
+
   //! -------------------- TYPE ----------------
 
   const fetchPokemonTypes = async () => {
@@ -107,7 +117,11 @@ const PokemonPage = () => {
             const isLiked = likedPokemons[id] || false;
             const pokemonTypes = types.map(({ type }) => type.name).join(", ");
             return (
-              <div key={id}>
+              <div
+                key={id}
+                onClick={() => handlePokemonClick(id)}
+                style={{ cursor: "pointer" }}
+              >
                 <img src={sprites.front_default} alt={name} />
                 <h2>{name}</h2>
                 <h2>{pokemonTypes}</h2>
@@ -115,7 +129,7 @@ const PokemonPage = () => {
                   isLiked={isLiked}
                   onToggleLike={() => handleToggleLike(id)}
                 />
-                <button className="btn btn-blue">+ Info</button>
+                {/* <button className="btn btn-blue">+ Info</button> */}
               </div>
             );
           })}
