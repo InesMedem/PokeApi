@@ -3,16 +3,15 @@ import { getByIdPokemon, getByTypePokemon } from "../services/pokemon.service";
 import LikeButton from "../components/LikeButton";
 import SearchFunction from "../components/SearchFunction";
 import FilterPokemon from "../components/FilterPokemon";
+import Pokedex from "../components/Pokedex";
 
 const PokemonPage = () => {
   const [pokemon, setPokemon] = useState([]);
-  // console.log("🚀 ~ PokemonPage ~ pokemon:", pokemon);
 
   //* pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const pokemonsPerPage = 100; // Number of pokemons per page
-  const totalPokemon = 1118; // Total number of pokemons in the API
-
+  const pokemonsPerPage = 100;
+  const totalPokemon = 1118;
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
 
@@ -37,11 +36,9 @@ const PokemonPage = () => {
   //! -------------------- SEARCH ----------------
 
   useEffect(() => {
-    // Filter data based on the search query
     const filteredData = pokemon.filter((item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    // Update the search results
     setSearchResults(filteredData);
   }, [searchQuery, pokemon]);
 
@@ -102,14 +99,18 @@ const PokemonPage = () => {
       <div className="flex flex-col items-center m-6 justify">
         <FilterPokemon types={types} />
         <SearchFunction setSearchQuery={setSearchQuery} />
+
+        <Pokedex />
+
         <div className="flex flex-wrap p-4">
-          {searchResults.map(({ id, name, sprites }) => {
+          {searchResults.map(({ id, name, sprites, types }) => {
             const isLiked = likedPokemons[id] || false;
+            const pokemonTypes = types.map(({ type }) => type.name).join(", ");
             return (
               <div key={id}>
                 <img src={sprites.front_default} alt={name} />
                 <h2>{name}</h2>
-                <h2>Type: {}</h2>
+                <h2>{pokemonTypes}</h2>
                 <LikeButton
                   isLiked={isLiked}
                   onToggleLike={() => handleToggleLike(id)}

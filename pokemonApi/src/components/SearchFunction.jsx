@@ -4,7 +4,7 @@ const SearchFunction = ({ setSearchQuery }) => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-300 p-3">
       <input
         className="btn"
         type="text"
