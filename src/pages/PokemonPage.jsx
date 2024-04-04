@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { getByIdPokemon, getByTypePokemon } from "../services/pokemon.service";
+import {
+  getAllPokemon,
+  getByIdPokemon,
+  getByTypePokemon,
+} from "../services/pokemon.service";
 import typeColors from "../utils/typeColors";
 
 //* Components
@@ -22,6 +26,7 @@ const PokemonPage = () => {
 
   //* Pokemons (grid)
   const [pokemon, setPokemon] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]); // Initialize pokemonData state
 
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
@@ -41,6 +46,14 @@ const PokemonPage = () => {
     }
     return pokemonData;
   };
+
+  useEffect(() => {
+    const fetchAllPokemonData = async () => {
+      const allPokemonData = await getAllPokemon();
+      setPokemonData(allPokemonData);
+    };
+    fetchAllPokemonData();
+  }, []);
 
   //! -------------------- TYPE ----------------
 
