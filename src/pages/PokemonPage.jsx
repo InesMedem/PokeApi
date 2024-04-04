@@ -31,6 +31,17 @@ const PokemonPage = () => {
   const pokemonsPerPage = 100;
   const totalPokemon = 1118;
 
+  //! -------------------- FETCH DATA ----------------
+
+  const fetchData = async (startIndex, endIndex) => {
+    const pokemonData = [];
+    for (let i = startIndex; i <= endIndex; i++) {
+      const pokemonInfo = await getByIdPokemon(i);
+      pokemonData.push(pokemonInfo);
+    }
+    return pokemonData;
+  };
+
   //! -------------------- TYPE ----------------
 
   const fetchPokemonTypes = async () => {
@@ -44,11 +55,15 @@ const PokemonPage = () => {
 
   //! -------------------- SEARCH ----------------
 
-  useEffect(() => {
+  const filterData = () => {
     const filteredData = pokemon.filter((item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setSearchResults(filteredData);
+  };
+
+  useEffect(() => {
+    filterData();
   }, [searchQuery, pokemon]);
 
   //! -------------------- POKEDEX ----------------
@@ -59,11 +74,6 @@ const PokemonPage = () => {
   };
 
   //! -------------------- LIKE  ----------------
-
-  useEffect(() => {
-    const savedLikedPokemons = localStorage.getItem("likedPokemons");
-    if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
-  }, []);
 
   const handleToggleLike = (id) => {
     setLikedPokemons((prevLikedPokemons) => {
@@ -77,36 +87,36 @@ const PokemonPage = () => {
     });
   };
 
+  useEffect(() => {
+    const savedLikedPokemons = localStorage.getItem("likedPokemons");
+    if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
+  }, []);
+
   //! -------------------- PAGINATION ----------------
 
-  const fetchData = async () => {
+  const handlePageChange = async (page) => {
     const startIndex = (currentPage - 1) * pokemonsPerPage + 1;
     const endIndex = Math.min(startIndex + pokemonsPerPage - 1, totalPokemon);
-    const pokemonData = [];
-    for (let i = startIndex; i <= endIndex; i++) {
-      const pokemonInfo = await getByIdPokemon(i);
-      pokemonData.push(pokemonInfo);
-    }
+    const pokemonData = await fetchData(startIndex, endIndex);
     setPokemon(pokemonData);
+    setCurrentPage(page);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [currentPage]);
-
-  // Calculate total pages
   const totalPages = Math.ceil(totalPokemon / pokemonsPerPage);
 
-  // Generate page numbers
   const pageNumbers = Array.from(
     { length: totalPages },
     (_, index) => index + 1
   );
 
-  // Handle page click
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
-  };
+  useEffect(() => {
+    fetchData(
+      (currentPage - 1) * pokemonsPerPage + 1,
+      currentPage * pokemonsPerPage
+    ).then((data) => {
+      setPokemon(data);
+    });
+  }, [currentPage]);
 
   //! -------------------- RETURN  ----------------
 
@@ -114,6 +124,7 @@ const PokemonPage = () => {
     <>
       <div className="flex flex-col">
         <FilterPokemon types={types} />
+
         <SearchFunction setSearchQuery={setSearchQuery} />
 
         <Pokedex selectedPokemon={selectedPokemon} />
@@ -148,7 +159,7 @@ const PokemonPage = () => {
 
         <Pagination
           pageNumbers={pageNumbers}
-          handlePageClick={handlePageClick}
+          handlePageClick={handlePageChange}
         />
       </div>
     </>
