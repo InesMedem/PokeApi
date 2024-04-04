@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useFetching = (service) => {
+const useFetching = (service, paramEndPoint) => {
   const [state, setState] = useState({
     data: null,
     isLoading: null,
@@ -14,21 +14,48 @@ const useFetching = (service) => {
       hasError: null,
     });
     setState({ ...state, isLoading: true });
-    try {
-      const res = await service();
-      res.status == 200 &&
-        setState({
-          ...state,
-          data: res.data,
-          hasError: false,
-          isLoading: false,
-        });
-    } catch (error) {
-      setState({
-        ...state,
-        isLoading: false,
-        hasError: error,
-      });
+
+    switch (paramEndPoint) {
+      case undefined:
+        try {
+          const res = await service();
+          res.status === 200 &&
+            setState({
+              ...state,
+              data: res.data,
+              isLoading: false,
+              hasError: false,
+            });
+        } catch (error) {
+          setState({
+            ...state,
+            data: null,
+            isLoading: false,
+            hasError: error,
+          });
+        }
+
+        break;
+
+      default:
+        try {
+          const res = await service(paramEndPoint);
+          res.status === 200 &&
+            setState({
+              ...state,
+              data: res.data,
+              isLoading: false,
+              hasError: false,
+            });
+        } catch (error) {
+          setState({
+            ...state,
+            data: null,
+            isLoading: false,
+            hasError: error,
+          });
+        }
+        break;
     }
   };
 
