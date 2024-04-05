@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import typeColors from "../utils/typeColors";
+
 import {
   getAllPokemon,
   getByIdPokemon,
   getByTypePokemon,
 } from "../services/pokemon.service";
-import typeColors from "../utils/typeColors";
 
 //* Components
 import LikeButton from "../components/LikeButton";
@@ -26,7 +27,7 @@ const PokemonPage = () => {
 
   //* Pokemons (grid)
   const [pokemon, setPokemon] = useState([]);
-  const [pokemonData, setPokemonData] = useState([]); // Initialize pokemonData state
+  const [pokemonData, setPokemonData] = useState([]);
 
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
@@ -135,32 +136,72 @@ const PokemonPage = () => {
 
   return (
     <>
-      <div className="flex flex-col">
-        <FilterPokemon types={types} />
+      <div className="flex flex-col px-20">
+        <div>
+          {/* <FilterPokemon types={types} /> */}
 
-        <SearchFunction setSearchQuery={setSearchQuery} />
+          <SearchFunction setSearchQuery={setSearchQuery} />
 
-        <Pokedex selectedPokemon={selectedPokemon} />
+          {/* <div>
+            <button className="btn btn-blue">
+              <span className="material-symbols-outlined">autorenew</span>
+              Surprise me
+            </button>
+            sort by:
+            <select>
+              <option value="Option 1">Option 1</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Option 3">Option 3</option>
+            </select>
+            ability
+            <select>
+              <option value="Option 1">Option 1</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Option 3">Option 3</option>
+            </select>
+          </div> */}
+        </div>
+        {/* <Pokedex selectedPokemon={selectedPokemon} /> */}
 
-        <div className="flex flex-wrap p-4 justify-center">
+        <div className="flex flex-wrap justify-center gap-5">
           {searchResults.map(({ id, name, sprites, types }) => {
             const isLiked = likedPokemons[id] || false;
-            const pokemonTypes = types.map(({ type }) => type.name).join(", ");
+
+            // const pokemonTypes = types.map(({ type }) => type.name).join(", ");
             return (
               <div
                 key={id}
-                onClick={() => handlePokemonClick(id)}
-                className="p-8 m-4 "
+                // onClick={() => handlePokemonClick(id)}
+                className="flex flex-col rounded-xl w-56 text-center p-4 shadow-lg"
                 style={{
-                  cursor: "pointer",
-                  backgroundColor: typeColors[types[0].type.name].color,
-                  border: "black 5px solid",
-                  // color: typeColors[types[1].type.name].color,
+                  border: `${typeColors[types[0].type.name].color} 5px solid`,
                 }}
               >
-                <img src={sprites.front_default} alt={name} />
-                <h2>{name}</h2>
-                <h2>{pokemonTypes}</h2>
+                <h2 className="uppercase font-bold text-2xl">{name}</h2>
+                <img
+                  src={sprites.front_default}
+                  alt={name}
+                  className="animate-bounce"
+                />
+
+                <div>
+                  {types.map((typeData, i) => (
+                    <button
+                      key={i}
+                      className="capitalize m-1.5 font-bold py-2 px-3 rounded-full text-white 
+
+                      "
+                      style={{
+                        backgroundColor: typeColors[typeData.type.name].color,
+                      }}
+                    >
+                      {typeData.type.name}
+                    </button>
+                  ))}
+                </div>
+
+                {/* <button className="btn btn-blue">{pokemonTypes}</button> */}
+
                 <LikeButton
                   isLiked={isLiked}
                   onToggleLike={() => handleToggleLike(id)}

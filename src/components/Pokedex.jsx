@@ -1,14 +1,15 @@
 import pokedexImage from "../public/pokedex.png";
 
 const Pokedex = ({ selectedPokemon }) => {
+  console.log("🚀 ~ Pokedex ~ selectedPokemon:", selectedPokemon);
   return (
     <>
       {selectedPokemon && (
         <div
-          className="bg-cover w-full h-96"
+          className=""
           // style={{ backgroundImage: `url(${pokedexImage})` }}
         >
-          <h2>{selectedPokemon.name}</h2>
+          <h2 className="capitalize">{selectedPokemon.name}</h2>
           <img
             src={selectedPokemon.sprites.other.showdown.front_default}
             alt={selectedPokemon.name}
