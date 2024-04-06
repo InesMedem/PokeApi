@@ -1,4 +1,5 @@
 import typeColors from "../utils/typeColors";
+import PropTypes from "prop-types";
 
 const FilterPokemon = ({ types }) => {
   return (
@@ -10,13 +11,20 @@ const FilterPokemon = ({ types }) => {
             key={i}
             style={{ backgroundColor: typeColors[type.name].color }}
           >
-            {/* {typeColors[type.name.toLowerCase()].emoji} */}
             {type.name}
           </button>
         ))}
       </div>
     </>
   );
+};
+
+FilterPokemon.propTypes = {
+  types: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default FilterPokemon;
