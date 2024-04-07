@@ -2,10 +2,14 @@ import axios from "axios";
 import { axiosUtil } from "../utils/axiosUtil";
 
 export const getAllPokemon = async () => {
-  const response = await axios.get(
-    "https://pokeapi.co/api/v2/pokemon?limit=1118"
-  );
-  return response.data;
+  try {
+    const response = await axios.get(
+      "https://pokeapi.co/api/v2/pokemon?limit=1118"
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching All pokemons:", error);
+  }
 };
 
 export const getByIdPokemon = async (id) => {

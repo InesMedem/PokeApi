@@ -17,22 +17,22 @@ const PokemonPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  //* Pokemons (grid)
-  const [pokemon, setPokemon] = useState([]);
-  const [pokemonData, setPokemonData] = useState([]);
-
-  //* likeButton
-  const [likedPokemons, setLikedPokemons] = useState({});
-
-  //* Pagination
+  //* Pagination + Loading
   const [currentPage, setCurrentPage] = useState(1);
   const pokemonsPerPage = 100;
   const totalPokemon = 1118;
 
-  //* Loading
   const [loading, setLoading] = useState(true);
+  const [types, setTypes] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]);
 
-  //! -------------------- FETCH DATA ----------------
+  //* Pokemons (grid)
+  const [pokemon, setPokemon] = useState([]);
+
+  //* likeButton
+  const [likedPokemons, setLikedPokemons] = useState({});
+
+  //! 1-------------------- FETCH DATA ----------------
 
   const fetchData = async (startIndex, endIndex) => {
     const pokemonData = [];
@@ -43,18 +43,12 @@ const PokemonPage = () => {
     return pokemonData;
   };
 
-  useEffect(() => {
-    const fetchAllPokemonData = async () => {
-      setLoading(true);
-      const allPokemonData = await getAllPokemon();
-      console.log("🚀 ~ fetchAllPokemonData ~ allPokemonData:", allPokemonData);
-      setPokemonData(allPokemonData);
-      setLoading(false);
-    };
-    fetchAllPokemonData();
-  }, []);
-
-  //! -------------------- TYPE ----------------
+  const fetchAllPokemonData = async () => {
+    setLoading(true);
+    const allPokemonData = await getAllPokemon();
+    setPokemonData(allPokemonData);
+    setLoading(false);
+  };
 
   const fetchPokemonTypes = async () => {
     const typesData = await getByTypePokemon();
@@ -62,42 +56,20 @@ const PokemonPage = () => {
   };
 
   useEffect(() => {
+    fetchAllPokemonData();
     fetchPokemonTypes();
   }, []);
 
-  //! -------------------- SEARCH ----------------
+  //! 2-------------------- PAGINATION + loading ----------------
 
-  const filterData = () => {
-    const filteredData = pokemon.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setSearchResults(filteredData);
-  };
+  fetchData(
+    (currentPage - 1) * pokemonsPerPage + 1,
+    currentPage * pokemonsPerPage
+  ).then((data) => {
+    setPokemon(data);
+  });
 
-  useEffect(() => {
-    filterData();
-  }, [searchQuery, pokemon]);
-
-  //! -------------------- LIKE  ----------------
-
-  const handleToggleLike = (id) => {
-    setLikedPokemons((prevLikedPokemons) => {
-      const isLiked = prevLikedPokemons[id];
-      const updatedLikedPokemons = { ...prevLikedPokemons, [id]: !isLiked };
-      localStorage.setItem(
-        "likedPokemons",
-        JSON.stringify(updatedLikedPokemons)
-      );
-      return updatedLikedPokemons;
-    });
-  };
-
-  useEffect(() => {
-    const savedLikedPokemons = localStorage.getItem("likedPokemons");
-    if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
-  }, []);
-
-  //! -------------------- PAGINATION ----------------
+  useEffect(() => {}, [currentPage]);
 
   const handlePageChange = async (page) => {
     setLoading(true);
@@ -116,14 +88,37 @@ const PokemonPage = () => {
     (_, index) => index + 1
   );
 
+  //! 4-------------------- SEARCH ----------------
+
+  const filterData = () => {
+    const filteredData = pokemon.filter((item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSearchResults(filteredData);
+  };
+
   useEffect(() => {
-    fetchData(
-      (currentPage - 1) * pokemonsPerPage + 1,
-      currentPage * pokemonsPerPage
-    ).then((data) => {
-      setPokemon(data);
+    filterData();
+  }, [searchQuery, pokemon]);
+
+  //! 5-------------------- LIKE  ----------------
+
+  const handleToggleLike = (id) => {
+    setLikedPokemons((prevLikedPokemons) => {
+      const isLiked = prevLikedPokemons[id];
+      const updatedLikedPokemons = { ...prevLikedPokemons, [id]: !isLiked };
+      localStorage.setItem(
+        "likedPokemons",
+        JSON.stringify(updatedLikedPokemons)
+      );
+      return updatedLikedPokemons;
     });
-  }, [currentPage]);
+  };
+
+  useEffect(() => {
+    const savedLikedPokemons = localStorage.getItem("likedPokemons");
+    if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
+  }, []);
 
   //! -------------------- RETURN  ----------------
 
