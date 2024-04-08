@@ -56,8 +56,11 @@ const PokemonPage = () => {
   };
 
   useEffect(() => {
-    fetchAllPokemonData();
     fetchPokemonTypes();
+  }, []);
+
+  useEffect(() => {
+    fetchAllPokemonData();
   }, []);
 
   //! 2-------------------- PAGINATION + loading ----------------
