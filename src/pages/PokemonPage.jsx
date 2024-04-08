@@ -34,7 +34,28 @@ const PokemonPage = () => {
 
   //! 1-------------------- FETCH DATA ----------------
 
-  const fetchData = async (startIndex, endIndex) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const startIndex = (currentPage - 1) * pokemonsPerPage + 1;
+        const endIndex = Math.min(
+          startIndex + pokemonsPerPage - 1,
+          totalPokemon
+        );
+        const pokemonData = await fetchPokemonData(startIndex, endIndex);
+        setPokemon(pokemonData);
+      } catch (error) {
+        console.error("Error fetching Pokemon data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, pokemonsPerPage, totalPokemon]);
+
+  const fetchPokemonData = async (startIndex, endIndex) => {
     const pokemonData = [];
     for (let i = startIndex; i <= endIndex; i++) {
       const pokemonInfo = await getByIdPokemon(i);
@@ -43,12 +64,18 @@ const PokemonPage = () => {
     return pokemonData;
   };
 
-  const fetchAllPokemonData = async () => {
-    setLoading(true);
-    const allPokemonData = await getAllPokemon();
-    setPokemonData(allPokemonData);
-    setLoading(false);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
+
+  const totalPages = Math.ceil(totalPokemon / pokemonsPerPage);
+
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
+  //! 1-------------------- FETCH DATA ----------------
 
   const fetchPokemonTypes = async () => {
     const typesData = await getByTypePokemon();
@@ -58,38 +85,6 @@ const PokemonPage = () => {
   useEffect(() => {
     fetchPokemonTypes();
   }, []);
-
-  useEffect(() => {
-    fetchAllPokemonData();
-  }, []);
-
-  //! 2-------------------- PAGINATION + loading ----------------
-
-  fetchData(
-    (currentPage - 1) * pokemonsPerPage + 1,
-    currentPage * pokemonsPerPage
-  ).then((data) => {
-    setPokemon(data);
-  });
-
-  useEffect(() => {}, [currentPage]);
-
-  const handlePageChange = async (page) => {
-    setLoading(true);
-    const startIndex = (currentPage - 1) * pokemonsPerPage + 1;
-    const endIndex = Math.min(startIndex + pokemonsPerPage - 1, totalPokemon);
-    const pokemonData = await fetchData(startIndex, endIndex);
-    setPokemon(pokemonData);
-    setCurrentPage(page);
-    setLoading(false);
-  };
-
-  const totalPages = Math.ceil(totalPokemon / pokemonsPerPage);
-
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
 
   //! 4-------------------- SEARCH ----------------
 
@@ -133,7 +128,7 @@ const PokemonPage = () => {
             <SearchFunction setSearchQuery={setSearchQuery} />
             <Pagination
               pageNumbers={pageNumbers}
-              handlePageClick={handlePageChange}
+              handlePageChange={handlePageChange}
             />
           </div>
         </section>
@@ -147,7 +142,7 @@ const PokemonPage = () => {
               return (
                 <div
                   key={id}
-                  // onClick={() => handlePokemonClick(id)}
+                  onClick={() => handlePokemonClick(id)}
                   className="flex flex-col rounded-xl w-56 text-center p-4 shadow-lg bg-white"
                   style={{
                     border: `${typeColors[types[0].type.name].color} 5px solid`,
