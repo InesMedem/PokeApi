@@ -1,7 +1,11 @@
+import "./loadingSpinner.css";
+
 const Spinner = () => {
   return (
     <div role="status" className="flex justify-center h-screen items-center">
-      <svg
+      <span className="loader"></span>
+
+      {/* <svg
         aria-hidden="true"
         className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
         viewBox="0 0 100 101"
@@ -18,7 +22,7 @@ const Spinner = () => {
         />
       </svg>
       <span className="sr-only"></span>
-      <p className="text-4xl p-4">Loading...</p>
+      <p className="text-4xl p-4">Loading...</p> */}
     </div>
   );
 };

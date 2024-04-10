@@ -19,8 +19,8 @@ const PokemonPage = () => {
 
   //* Pagination + Loading
   const [currentPage, setCurrentPage] = useState(1);
-  const pokemonsPerPage = 100;
-  const totalPokemon = 400;
+  const pokemonsPerPage = 50;
+  const totalPokemon = 1000;
 
   const [loading, setLoading] = useState(true);
   const [types, setTypes] = useState([]);
@@ -32,7 +32,7 @@ const PokemonPage = () => {
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
 
-  //! 1-------------------- FETCH DATA ----------------
+  //! -------------------- FETCH DATA ----------------
 
   useEffect(() => {
     const fetchData = async () => {
@@ -122,8 +122,8 @@ const PokemonPage = () => {
 
   return (
     <>
-      <div className="flex flex-col px-20 bg-slate-50">
-        <section className="flex flex-col p-4 items-center bg-slate-300 m-4 rounded-xl">
+      <div className="flex flex-col bg-slate-50 p-10">
+        <section className="flex flex-col py-10 my-10 items-center bg-slate-300 m-4 rounded-xl">
           <div>
             <SearchFunction setSearchQuery={setSearchQuery} />
             <Pagination
@@ -133,17 +133,19 @@ const PokemonPage = () => {
           </div>
         </section>
         {loading ? (
-          <Spinner />
+          <>
+            <Spinner />
+          </>
         ) : (
-          <div className="flex flex-wrap justify-center gap-5">
+          <div className="flex flex-wrap justify-center gap-10">
             {searchResults.map(({ id, name, sprites, types }) => {
               const isLiked = likedPokemons[id] || false;
 
               return (
                 <div
                   key={id}
-                  onClick={() => handlePokemonClick(id)}
-                  className="flex flex-col rounded-xl w-56 text-center p-4 shadow-lg bg-white"
+                  // onClick={() => handlePokemonClick(id)}
+                  className="flex flex-col rounded-xl w-56 text-center p-5 shadow-lg bg-white"
                   style={{
                     border: `${typeColors[types[0].type.name].color} 5px solid`,
                   }}
