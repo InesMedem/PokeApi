@@ -21,7 +21,7 @@ const PokemonPage = () => {
   //* Pagination + Loading
   const [currentPage, setCurrentPage] = useState(1);
   const pokemonsPerPage = 40;
-  const totalPokemon = 151;
+  const totalPokemon = 1000;
 
   const [loading, setLoading] = useState(true);
   const [types, setTypes] = useState([]);
