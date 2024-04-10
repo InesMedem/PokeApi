@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import typeColors from "../utils/typeColors";
+import "../index.css";
 
 import {
   getAllPokemon,
@@ -34,6 +35,34 @@ const PokemonPage = () => {
 
   //! -------------------- FETCH DATA ----------------
 
+  // const fetchPokemonData = async (startIndex, endIndex) => {
+  //   const pokemonData = [];
+  //   for (let i = startIndex; i <= endIndex; i++) {
+  //     const pokemonInfo = await getByIdPokemon(i);
+  //     pokemonData.push(pokemonInfo);
+  //   }
+  //   return pokemonData;
+  // };
+
+  const fetchPokemonData = async (startIndex, endIndex) => {
+    const offset = startIndex - 1; // Adjust for 0-based index in API
+    const limit = endIndex - startIndex + 1; // Number of pokemons to fetch
+
+    try {
+      const pokemonListResponse = await getAllPokemon(offset, limit);
+      const pokemonData = await Promise.all(
+        pokemonListResponse.results.map(async (pokemon) => {
+          const pokemonInfo = await getByIdPokemon(pokemon.name);
+          return pokemonInfo;
+        })
+      );
+      return pokemonData;
+    } catch (error) {
+      console.error("Error fetching Pokemon data:", error);
+      return [];
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -54,15 +83,6 @@ const PokemonPage = () => {
 
     fetchData();
   }, [currentPage, pokemonsPerPage, totalPokemon]);
-
-  const fetchPokemonData = async (startIndex, endIndex) => {
-    const pokemonData = [];
-    for (let i = startIndex; i <= endIndex; i++) {
-      const pokemonInfo = await getByIdPokemon(i);
-      pokemonData.push(pokemonInfo);
-    }
-    return pokemonData;
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
