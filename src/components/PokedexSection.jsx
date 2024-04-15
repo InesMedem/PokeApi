@@ -1,13 +1,8 @@
-import React from "react";
-
 const PokedexSection = ({ selectedPokemon }) => {
   return (
     <>
       {selectedPokemon && (
-        <div
-          className=""
-          // style={{ backgroundImage: `url(${pokedexImage})` }}
-        >
+        <div className="bg-blue-400">
           <h2 className="capitalize">{selectedPokemon.name}</h2>
           <img
             src={selectedPokemon.sprites.other.showdown.front_default}

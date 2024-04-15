@@ -12,7 +12,6 @@ import LikeButton from "../components/LikeButton";
 import SearchFunction from "../components/SearchFunction";
 import Pagination from "../components/Pagination";
 import Spinner from "../components/Spinner";
-// import Pokedex from "../components/Pokedex";
 import PokedexSection from "../components/PokedexSection";
 
 const PokemonPage = () => {
@@ -159,6 +158,10 @@ const PokemonPage = () => {
               the first generation
             </p>
             <SearchFunction setSearchQuery={setSearchQuery} />
+            <button className="btn btn-blue">
+              <span className="material-symbols-outlined">autorenew</span>
+              Surprise me
+            </button>
             <Pagination
               pageNumbers={pageNumbers}
               handlePageChange={handlePageChange}
@@ -169,10 +172,12 @@ const PokemonPage = () => {
         {loading ? (
           <>
             <Spinner />
-            <PokedexSection selectedPokemon={selectedPokemon} />
           </>
         ) : (
           <div className="flex flex-wrap justify-center gap-10">
+            {selectedPokemon && (
+              <PokedexSection selectedPokemon={selectedPokemon} />
+            )}
             {searchResults.map(({ id, name, sprites, types }) => {
               const isLiked = likedPokemons[id] || false;
 
@@ -180,6 +185,9 @@ const PokemonPage = () => {
                 <div
                   key={id}
                   className="flex flex-col rounded-xl w-56 text-center p-5 shadow-lg bg-white"
+                  onClick={() =>
+                    handlePokemonClick({ id, name, sprites, types })
+                  }
                   style={{
                     border: `${typeColors[types[0].type.name].color} 5px solid`,
                   }}
@@ -188,7 +196,7 @@ const PokemonPage = () => {
                   <img
                     src={sprites.front_default}
                     alt={name}
-                    className="animate-bounce"
+                    // className="animate-bounce"
                   />
                   <div>
                     {types.map((typeData, i) => (
