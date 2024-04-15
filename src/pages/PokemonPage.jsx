@@ -31,6 +31,7 @@ const PokemonPage = () => {
 
   //* Pokemons (grid)
   const [pokemon, setPokemon] = useState([]);
+  console.log("🚀 ~ PokemonPage ~ pokemon:", pokemon);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   //* likeButton
@@ -175,29 +176,36 @@ const PokemonPage = () => {
             <Spinner />
           </>
         ) : (
-          <div className="flex flex-wrap justify-center gap-10">
-            {selectedPokemon && (
-              <PokedexSection selectedPokemon={selectedPokemon} />
-            )}
-            {searchResults.map(({ id, name, sprites, types }) => {
-              const isLiked = likedPokemons[id] || false;
-
-              return (
-                <PokemonCard
-                  key={id}
-                  id={id}
-                  name={name}
-                  sprites={sprites}
+          <div className="flex justify-center">
+            <div className="w-full lg:w-1/4">
+              {selectedPokemon && (
+                <PokedexSection
+                  selectedPokemon={selectedPokemon}
                   types={types}
-                  isLiked={isLiked}
-                  onClick={() =>
-                    handlePokemonClick({ id, name, sprites, types })
-                  }
                 />
-              );
-            })}
-            <div className="flex">
-              <button className="btn btn-blue">Load more</button>
+              )}
+            </div>
+            <div className="w-full lg:w-3/4 flex flex-wrap justify-center gap-10">
+              {searchResults.map(({ id, name, sprites, types }) => {
+                const isLiked = likedPokemons[id] || false;
+
+                return (
+                  <PokemonCard
+                    key={id}
+                    id={id}
+                    name={name}
+                    sprites={sprites}
+                    types={types}
+                    isLiked={isLiked}
+                    onClick={() =>
+                      handlePokemonClick({ id, name, sprites, types })
+                    }
+                  />
+                );
+              })}
+              <div className="flex">
+                <button className="btn btn-blue">Load more</button>
+              </div>
             </div>
           </div>
         )}
