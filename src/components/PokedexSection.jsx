@@ -1,6 +1,6 @@
-import pokedexImage from "../public/pokedex.png";
+import React from "react";
 
-const Pokedex = ({ selectedPokemon }) => {
+const PokedexSection = ({ selectedPokemon }) => {
   return (
     <>
       {selectedPokemon && (
@@ -27,4 +27,4 @@ const Pokedex = ({ selectedPokemon }) => {
   );
 };
 
-export default Pokedex;
+export default PokedexSection;

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  /* margin: 200px */
+  /* margin: 40px; */
+  /* background-color: ; */
+}
+
+button {
+  font: bold
+}
 
 .btn {
     @apply font-bold py-2 px-4 rounded; 
@@ -13,6 +22,15 @@
   .btn-blue:hover {
     @apply bg-blue-700;
   }
+
+  .btn-active {
+    background-color: #4f46e5; /* Example active button color */
+  }
+  
+  .btn-inactive {
+    background-color: #6b7280; /* Example non-active button color */
+  }
+  
 
 
   @keyframes bounce {

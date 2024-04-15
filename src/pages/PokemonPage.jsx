@@ -12,6 +12,8 @@ import LikeButton from "../components/LikeButton";
 import SearchFunction from "../components/SearchFunction";
 import Pagination from "../components/Pagination";
 import Spinner from "../components/Spinner";
+// import Pokedex from "../components/Pokedex";
+import PokedexSection from "../components/PokedexSection";
 
 const PokemonPage = () => {
   //* SearchFunction
@@ -29,6 +31,7 @@ const PokemonPage = () => {
 
   //* Pokemons (grid)
   const [pokemon, setPokemon] = useState([]);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
@@ -138,6 +141,10 @@ const PokemonPage = () => {
     if (savedLikedPokemons) setLikedPokemons(JSON.parse(savedLikedPokemons));
   }, []);
 
+  const handlePokemonClick = (pokemon) => {
+    setSelectedPokemon(pokemon);
+  };
+
   //! -------------------- RETURN  ----------------
 
   return (
@@ -155,12 +162,14 @@ const PokemonPage = () => {
             <Pagination
               pageNumbers={pageNumbers}
               handlePageChange={handlePageChange}
+              currentPage={currentPage}
             />
           </div>
         </section>
         {loading ? (
           <>
             <Spinner />
+            <PokedexSection selectedPokemon={selectedPokemon} />
           </>
         ) : (
           <div className="flex flex-wrap justify-center gap-10">
@@ -170,7 +179,6 @@ const PokemonPage = () => {
               return (
                 <div
                   key={id}
-                  // onClick={() => handlePokemonClick(id)}
                   className="flex flex-col rounded-xl w-56 text-center p-5 shadow-lg bg-white"
                   style={{
                     border: `${typeColors[types[0].type.name].color} 5px solid`,
@@ -203,6 +211,9 @@ const PokemonPage = () => {
                 </div>
               );
             })}
+            <div className="flex">
+              <button className="btn btn-blue">Load more</button>
+            </div>
           </div>
         )}
       </div>
