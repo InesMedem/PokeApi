@@ -8,11 +8,12 @@ import {
   getByTypePokemon,
 } from "../services/pokemon.service";
 
-import LikeButton from "../components/LikeButton";
+// import LikeButton from "../components/LikeButton";
 import SearchFunction from "../components/SearchFunction";
 import Pagination from "../components/Pagination";
 import Spinner from "../components/Spinner";
 import PokedexSection from "../components/PokedexSection";
+import PokemonCard from "../components/PokemonCard";
 
 const PokemonPage = () => {
   //* SearchFunction
@@ -182,41 +183,17 @@ const PokemonPage = () => {
               const isLiked = likedPokemons[id] || false;
 
               return (
-                <div
+                <PokemonCard
                   key={id}
-                  className="flex flex-col rounded-xl w-56 text-center p-5 shadow-lg bg-white"
+                  id={id}
+                  name={name}
+                  sprites={sprites}
+                  types={types}
+                  isLiked={isLiked}
                   onClick={() =>
                     handlePokemonClick({ id, name, sprites, types })
                   }
-                  style={{
-                    border: `${typeColors[types[0].type.name].color} 5px solid`,
-                  }}
-                >
-                  <h2 className="uppercase font-bold text-2xl">{name}</h2>
-                  <img
-                    src={sprites.front_default}
-                    alt={name}
-                    // className="animate-bounce"
-                  />
-                  <div>
-                    {types.map((typeData, i) => (
-                      <button
-                        key={i}
-                        className="capitalize m-1.5 font-bold py-2 px-3 rounded-full text-white"
-                        style={{
-                          backgroundColor: typeColors[typeData.type.name].color,
-                        }}
-                      >
-                        {typeData.type.name}
-                      </button>
-                    ))}
-                  </div>
-
-                  <LikeButton
-                    isLiked={isLiked}
-                    onToggleLike={() => handleToggleLike(id)}
-                  />
-                </div>
+                />
               );
             })}
             <div className="flex">
