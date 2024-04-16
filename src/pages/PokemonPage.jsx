@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import typeColors from "../utils/typeColors";
+// import typeColors from "../utils/typeColors";
 import "../index.css";
 
 import {
@@ -150,8 +150,8 @@ const PokemonPage = () => {
 
   return (
     <>
-      <div className="flex h-screen flex-col bg-slate-50 p-20">
-        <section className="m-4 my-10 flex flex-col items-center rounded-xl bg-slate-300 py-10">
+      <div className="flex">
+        <section className="flex w-full flex-col items-center rounded-xl bg-slate-300 p-10 py-10 lg:w-1/4">
           <div>
             <p>
               The first generation of Pokémon began in 1996, introducing the
@@ -169,6 +169,9 @@ const PokemonPage = () => {
               handlePageChange={handlePageChange}
               currentPage={currentPage}
             />
+            {selectedPokemon && (
+              <PokedexSection selectedPokemon={selectedPokemon} types={types} />
+            )}
           </div>
         </section>
         {loading ? (
@@ -176,16 +179,8 @@ const PokemonPage = () => {
             <Spinner />
           </>
         ) : (
-          <div className="flex justify-center">
-            <div className="w-full lg:w-1/4">
-              {selectedPokemon && (
-                <PokedexSection
-                  selectedPokemon={selectedPokemon}
-                  types={types}
-                />
-              )}
-            </div>
-            <div className="flex w-full flex-wrap justify-center gap-10 lg:w-3/4">
+          <div className="flex justify-center lg:w-3/4">
+            <div className="flex w-full flex-wrap justify-center gap-10 ">
               {searchResults.map(({ id, name, sprites, types }) => {
                 const isLiked = likedPokemons[id] || false;
 

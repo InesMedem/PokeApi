@@ -3,7 +3,7 @@ const Pagination = ({ pageNumbers, handlePageChange, currentPage }) => {
     <div>
       {pageNumbers.map((page) => (
         <button
-          className={`btn btn-blue ${
+          className={`btn-pagination ${
             currentPage === page ? "btn-active" : "btn-inactive"
           }`}
           key={page}

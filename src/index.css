@@ -3,14 +3,10 @@
 @tailwind utilities;
 
 body {
-  /* margin: 200px */
-  /* margin: 40px; */
-  /* background-color: ; */
+  @apply  bg-gray-100 p-36
+
 }
 
-button {
-  font: bold
-}
 
 .btn {
     @apply font-bold py-2 px-4 rounded; 
@@ -23,12 +19,21 @@ button {
     @apply bg-blue-700;
   }
 
+  .btn-pagination {
+    @apply m-1 h-12 w-12 rounded font-bold text-white
+  }
+
+  .btn-pagination:hover {
+    @apply m-1 h-12 w-12 rounded font-bold text-white  bg-blue-500;
+  }
+  
+
   .btn-active {
-    background-color: #4f46e5; /* Example active button color */
+    @apply  bg-blue-700
   }
   
   .btn-inactive {
-    background-color: #6b7280; /* Example non-active button color */
+    @apply  bg-blue-400
   }
   
 

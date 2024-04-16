@@ -4,14 +4,14 @@ const PokedexSection = ({ selectedPokemon }) => {
   return (
     <>
       {selectedPokemon && (
-        <div className="bg-blue-400 w-full p-30">
-          <h2 className="uppercase font-bold text-2xl">
+        <div className="p-30 w-full">
+          <h2 className="text-2xl font-bold uppercase">
             {selectedPokemon.name}
           </h2>
           {selectedPokemon.types.map((typeData, i) => (
             <button
               key={i}
-              className="capitalize m-1.5 font-bold py-2 px-3 rounded-full text-white"
+              className="m-1.5 rounded-full px-3 py-2 font-bold capitalize text-white"
               style={{
                 backgroundColor: typeColors[typeData.type.name].color,
               }}
@@ -34,9 +34,8 @@ const PokedexSection = ({ selectedPokemon }) => {
               <li key={i}>{type.type.name}</li>
             ))}
           </p>
-          <p>weight</p>
-          <p>height</p>
-          <p>height</p>
+          <p>Weight: {selectedPokemon.base_experience}</p>
+          <p>Height: {selectedPokemon.height}</p>
         </div>
       )}
     </>
