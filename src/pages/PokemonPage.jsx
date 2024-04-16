@@ -145,6 +145,13 @@ const PokemonPage = () => {
     setSelectedPokemon(pokemon);
   };
 
+  //! -------------------- SURPRISE  ----------------
+
+  const handleSurpriseMeClick = () => {
+    const randomPage = Math.floor(Math.random() * totalPages) + 1;
+    setCurrentPage(randomPage);
+  };
+
   //! -------------------- RETURN  ----------------
 
   return (
@@ -159,7 +166,8 @@ const PokemonPage = () => {
             January 2024, 1025 Pokémon species have been introduced
           </p>
           <SearchFunction setSearchQuery={setSearchQuery} />
-          <button className="btn-surprise">
+
+          <button className="btn-surprise" onClick={handleSurpriseMeClick}>
             <span className="material-symbols-outlined">autorenew</span>
             Surprise me
           </button>
