@@ -32,6 +32,7 @@ const PokemonPage = () => {
   //* Pokemons (grid)
   const [pokemon, setPokemon] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  console.log("🚀 ~ PokemonPage ~ selectedPokemon:", selectedPokemon);
 
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
@@ -151,10 +152,11 @@ const PokemonPage = () => {
         <section className="flex flex-col items-center gap-10 bg-slate-300 p-10 py-10 lg:w-1/5">
           <h2 className=" text-blue-500">Welcome to the PokeAPi</h2>
           <p className="font-normal">
-            The Pokémon franchise is set in a world in which humans coexist with
-            creatures known as Pokémon. Pokémon Red and Blue contain 151 Pokémon
-            species, with new ones being added in subsequent games; as of
-            January 2024, 1025 Pokémon species have been introduced
+            {/* The Pokémon franchise is set in a world in which humans coexist with
+            creatures known as Pokémon.  */}
+            Pokémon Red and Blue contain 151 Pokémon species, with new ones
+            being added in subsequent games; as of January 2024, 1025 Pokémon
+            species have been introduced.
           </p>
           <SearchFunction setSearchQuery={setSearchQuery} />
 
@@ -162,14 +164,14 @@ const PokemonPage = () => {
             <span className="material-symbols-outlined">autorenew</span>
             Surprise me
           </button>
-          <div>
+          {/* <div>
             sort by:
             <select className="btn">
               <option value="Option 1">Option 1</option>
               <option value="Option 2">Option 2</option>
               <option value="Option 3">Option 3</option>
             </select>
-          </div>
+          </div> */}
           <Pagination
             pageNumbers={pageNumbers}
             handlePageChange={handlePageChange}

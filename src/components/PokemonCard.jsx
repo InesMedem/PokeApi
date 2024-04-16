@@ -20,12 +20,8 @@ const PokemonCard = ({
       }}
     >
       <h3>{name}</h3>
-      <p> #{id}</p>
-      <img
-        src={sprites.front_default}
-        alt={name}
-        // className="animate-bounce"
-      />
+      <p className="font-light"> #{id}</p>
+      <img src={sprites.front_default} alt={name} className="animate-bounce" />
       <div>
         {types.map((typeData, i) => (
           <button
