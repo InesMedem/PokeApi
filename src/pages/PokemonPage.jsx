@@ -22,7 +22,7 @@ const PokemonPage = () => {
 
   //* Pagination + Loading
   const [currentPage, setCurrentPage] = useState(1);
-  const pokemonsPerPage = 40;
+  const pokemonsPerPage = 17;
   const totalPokemon = 1000;
 
   const [loading, setLoading] = useState(true);
@@ -151,7 +151,7 @@ const PokemonPage = () => {
   return (
     <>
       <div className="flex">
-        <section className="flex flex-col items-center gap-5 rounded-xl bg-slate-300 p-10 py-10 lg:w-1/4">
+        <section className="flex flex-col items-center gap-10 rounded-xl bg-slate-300 p-10 py-10 lg:w-1/4">
           <p>
             The first generation of Pokémon began in 1996, introducing the first
             151 Pokémon of the series. Pokémon Red, Pokémon Green, Pokémon Blue
@@ -172,7 +172,7 @@ const PokemonPage = () => {
             <PokedexSection selectedPokemon={selectedPokemon} types={types} />
           )}
         </section>
-        <div className="flex justify-center lg:w-3/4">
+        <div className="flex flex-col justify-center lg:w-3/4">
           {loading ? (
             <Spinner />
           ) : (
@@ -195,11 +195,11 @@ const PokemonPage = () => {
                   />
                 );
               })}
-              <div className="flex">
-                <button className="btn btn-blue">Load more</button>
-              </div>
             </div>
           )}
+          <div className="m-10">
+            <button className="btn-surprise">Load more</button>
+          </div>
         </div>
       </div>
     </>
