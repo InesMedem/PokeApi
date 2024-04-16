@@ -14,7 +14,7 @@ const PokemonCard = ({
     <div
       key={id}
       onClick={onClick}
-      className="flex w-56 flex-col rounded-xl bg-white p-5 text-center shadow-lg"
+      className="flex w-56 cursor-pointer flex-col rounded-xl bg-white p-5 text-center shadow-lg "
       style={{
         border: `${typeColors[types[0].type.name].color} 5px solid`,
       }}
