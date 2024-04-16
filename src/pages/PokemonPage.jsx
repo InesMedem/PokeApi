@@ -23,7 +23,7 @@ const PokemonPage = () => {
   //* Pagination + Loading
   const [currentPage, setCurrentPage] = useState(1);
   const pokemonsPerPage = 17;
-  const totalPokemon = 1000;
+  const totalPokemon = 500;
 
   const [loading, setLoading] = useState(true);
   const [types, setTypes] = useState([]);
@@ -31,7 +31,6 @@ const PokemonPage = () => {
 
   //* Pokemons (grid)
   const [pokemon, setPokemon] = useState([]);
-  console.log("🚀 ~ PokemonPage ~ pokemon:", pokemon);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   //* likeButton
@@ -145,6 +144,7 @@ const PokemonPage = () => {
   const handlePokemonClick = (pokemon) => {
     setSelectedPokemon(pokemon);
   };
+  console.log("🚀 ~ handlePokemonClick ~ pokemon:", pokemon);
 
   //! -------------------- RETURN  ----------------
 
@@ -163,6 +163,14 @@ const PokemonPage = () => {
             <span className="material-symbols-outlined">autorenew</span>
             Surprise me
           </button>
+          <div>
+            sort by:
+            <select className="btn">
+              <option value="Option 1">Option 1</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Option 3">Option 3</option>
+            </select>
+          </div>
           <Pagination
             pageNumbers={pageNumbers}
             handlePageChange={handlePageChange}

@@ -25,18 +25,36 @@ const PokedexSection = ({ selectedPokemon }) => {
               className="w-40"
             />
           </div>
-          {selectedPokemon.types.map((typeData, i) => (
-            <button
-              key={i}
-              className="m-1.5 rounded-full px-3 py-2 font-bold capitalize text-white"
-              style={{
-                backgroundColor: typeColors[typeData.type.name].color,
-              }}
-            >
-              {typeData.type.name}
-            </button>
-          ))}
-          <p>Weight: {selectedPokemon.base_experience}</p>
+
+          <h3 className="font-bold uppercase">Type</h3>
+          <div>
+            {selectedPokemon.types.map((typeData, i) => (
+              <button
+                key={i}
+                className="m-1.5 w-24 rounded-lg py-2 font-bold capitalize text-white"
+                style={{
+                  backgroundColor: typeColors[typeData.type.name].color,
+                }}
+              >
+                {typeData.type.name}
+              </button>
+            ))}
+
+            <p className="font-bold uppercase">Weaknesses</p>
+            {selectedPokemon.types.map((typeData, i) => (
+              <button
+                key={i}
+                className="m-1.5 w-24 rounded-lg py-2 font-bold capitalize text-white"
+                style={{
+                  backgroundColor: typeColors[typeData.type.name].color,
+                }}
+              >
+                {typeData.type.name}
+              </button>
+            ))}
+          </div>
+
+          <p>Weight: {selectedPokemon.weight}</p>
           <p>Height: {selectedPokemon.height}</p>
         </div>
       )}

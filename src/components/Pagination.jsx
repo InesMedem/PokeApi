@@ -1,6 +1,6 @@
 const Pagination = ({ pageNumbers, handlePageChange, currentPage }) => {
   return (
-    <div>
+    <div className="flex flex-wrap justify-center">
       {pageNumbers.map((page) => (
         <button
           className={`btn-pagination ${
