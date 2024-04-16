@@ -58,7 +58,7 @@ const PokemonPage = () => {
         pokemonListResponse.results.map(async (pokemon) => {
           const pokemonInfo = await getByIdPokemon(pokemon.name);
           return pokemonInfo;
-        })
+        }),
       );
       return pokemonData;
     } catch (error) {
@@ -74,7 +74,7 @@ const PokemonPage = () => {
         const startIndex = (currentPage - 1) * pokemonsPerPage + 1;
         const endIndex = Math.min(
           startIndex + pokemonsPerPage - 1,
-          totalPokemon
+          totalPokemon,
         );
         const pokemonData = await fetchPokemonData(startIndex, endIndex);
         setPokemon(pokemonData);
@@ -96,7 +96,7 @@ const PokemonPage = () => {
 
   const pageNumbers = Array.from(
     { length: totalPages },
-    (_, index) => index + 1
+    (_, index) => index + 1,
   );
 
   //! 1-------------------- FETCH DATA ----------------
@@ -114,7 +114,7 @@ const PokemonPage = () => {
 
   const filterData = () => {
     const filteredData = pokemon.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setSearchResults(filteredData);
   };
@@ -131,7 +131,7 @@ const PokemonPage = () => {
       const updatedLikedPokemons = { ...prevLikedPokemons, [id]: !isLiked };
       localStorage.setItem(
         "likedPokemons",
-        JSON.stringify(updatedLikedPokemons)
+        JSON.stringify(updatedLikedPokemons),
       );
       return updatedLikedPokemons;
     });
@@ -150,8 +150,8 @@ const PokemonPage = () => {
 
   return (
     <>
-      <div className="flex flex-col bg-slate-50 p-10 h-screen">
-        <section className="flex flex-col py-10 my-10 items-center bg-slate-300 m-4 rounded-xl">
+      <div className="flex h-screen flex-col bg-slate-50 p-20">
+        <section className="m-4 my-10 flex flex-col items-center rounded-xl bg-slate-300 py-10">
           <div>
             <p>
               The first generation of Pokémon began in 1996, introducing the
@@ -185,7 +185,7 @@ const PokemonPage = () => {
                 />
               )}
             </div>
-            <div className="w-full lg:w-3/4 flex flex-wrap justify-center gap-10">
+            <div className="flex w-full flex-wrap justify-center gap-10 lg:w-3/4">
               {searchResults.map(({ id, name, sprites, types }) => {
                 const isLiked = likedPokemons[id] || false;
 
@@ -200,6 +200,7 @@ const PokemonPage = () => {
                     onClick={() =>
                       handlePokemonClick({ id, name, sprites, types })
                     }
+                    handleToggleLike={handleToggleLike}
                   />
                 );
               })}
