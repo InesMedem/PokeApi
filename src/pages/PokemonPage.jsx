@@ -144,7 +144,6 @@ const PokemonPage = () => {
   const handlePokemonClick = (pokemon) => {
     setSelectedPokemon(pokemon);
   };
-  console.log("🚀 ~ handlePokemonClick ~ pokemon:", pokemon);
 
   //! -------------------- RETURN  ----------------
 
@@ -152,11 +151,12 @@ const PokemonPage = () => {
     <>
       <div className="flex">
         <section className="flex flex-col items-center gap-10 rounded-xl bg-slate-300 p-10 py-10 lg:w-1/4">
-          <p>
-            The first generation of Pokémon began in 1996, introducing the first
-            151 Pokémon of the series. Pokémon Red, Pokémon Green, Pokémon Blue
-            and Pokémon Yellow are the core franchise games of the first
-            generation
+          <h1 className=" text-blue-500">Welcome to the PokeAPi</h1>
+          <p className="font-normal">
+            The Pokémon franchise is set in a world in which humans coexist with
+            creatures known as Pokémon. Pokémon Red and Blue contain 151 Pokémon
+            species, with new ones being added in subsequent games; as of
+            January 2024, 1025 Pokémon species have been introduced
           </p>
           <SearchFunction setSearchQuery={setSearchQuery} />
           <button className="btn-surprise">
@@ -176,15 +176,13 @@ const PokemonPage = () => {
             handlePageChange={handlePageChange}
             currentPage={currentPage}
           />
-          {selectedPokemon && (
-            <PokedexSection selectedPokemon={selectedPokemon} types={types} />
-          )}
         </section>
+
         <div className="flex flex-col justify-center lg:w-3/4">
           {loading ? (
             <Spinner />
           ) : (
-            <div className="ml-10 flex w-full flex-wrap justify-center gap-10">
+            <div className="flex w-full flex-wrap justify-center gap-10">
               {searchResults.map(({ id, name, sprites, types }) => {
                 const isLiked = likedPokemons[id] || false;
 
@@ -209,6 +207,11 @@ const PokemonPage = () => {
             <button className="btn-surprise">Load more</button>
           </div>
         </div>
+        <section>
+          {selectedPokemon && (
+            <PokedexSection selectedPokemon={selectedPokemon} types={types} />
+          )}
+        </section>
       </div>
     </>
   );

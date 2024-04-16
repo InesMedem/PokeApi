@@ -40,11 +40,11 @@ const PokedexSection = ({ selectedPokemon }) => {
               </button>
             ))}
 
-            <p className="font-bold uppercase">Weaknesses</p>
+            <p className=" uppercase">Weaknesses</p>
             {selectedPokemon.types.map((typeData, i) => (
               <button
                 key={i}
-                className="m-1.5 w-24 rounded-lg py-2 font-bold capitalize text-white"
+                className="m-1.5 w-24 rounded-lg py-2 capitalize text-white"
                 style={{
                   backgroundColor: typeColors[typeData.type.name].color,
                 }}

@@ -19,7 +19,7 @@ const PokemonCard = ({
         border: `${typeColors[types[0].type.name].color} 5px solid`,
       }}
     >
-      <h2 className="text-2xl font-bold uppercase">{name}</h2>
+      <h3>{name}</h3>
       <p> #{id}</p>
       <img
         src={sprites.front_default}
