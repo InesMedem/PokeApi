@@ -4,10 +4,27 @@ const PokedexSection = ({ selectedPokemon }) => {
   return (
     <>
       {selectedPokemon && (
-        <div className="p-30 w-full">
+        <div
+          className="p-30 flex w-full flex-col rounded-xl bg-white p-5 text-center shadow-lg"
+          // style={{
+          //   border: `${typeColors[types[0].type.name].color} 5px solid`,
+          // }}
+        >
           <h2 className="text-2xl font-bold uppercase">
             {selectedPokemon.name}
           </h2>
+          <div className="flex justify-between">
+            <img
+              src={selectedPokemon.sprites.front_default}
+              alt={selectedPokemon.name}
+              className="w-40"
+            />
+            <img
+              src={selectedPokemon.sprites.back_default}
+              alt={selectedPokemon.name}
+              className="w-40"
+            />
+          </div>
           {selectedPokemon.types.map((typeData, i) => (
             <button
               key={i}
@@ -19,21 +36,6 @@ const PokedexSection = ({ selectedPokemon }) => {
               {typeData.type.name}
             </button>
           ))}
-          <img
-            src={selectedPokemon.sprites.front_default}
-            alt={selectedPokemon.name}
-            className="w-full"
-          />
-          <img
-            src={selectedPokemon.sprites.back_default}
-            alt={selectedPokemon.name}
-            className="w-full"
-          />
-          <p>
-            {selectedPokemon.types.map((type, i) => (
-              <li key={i}>{type.type.name}</li>
-            ))}
-          </p>
           <p>Weight: {selectedPokemon.base_experience}</p>
           <p>Height: {selectedPokemon.height}</p>
         </div>

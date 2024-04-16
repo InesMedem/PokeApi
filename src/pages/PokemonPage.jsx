@@ -160,7 +160,7 @@ const PokemonPage = () => {
               the first generation
             </p>
             <SearchFunction setSearchQuery={setSearchQuery} />
-            <button className="btn btn-blue">
+            <button className="btn-surprise">
               <span className="material-symbols-outlined">autorenew</span>
               Surprise me
             </button>
@@ -174,13 +174,11 @@ const PokemonPage = () => {
             )}
           </div>
         </section>
-        {loading ? (
-          <>
+        <div className="flex justify-center lg:w-3/4">
+          {loading ? (
             <Spinner />
-          </>
-        ) : (
-          <div className="flex justify-center lg:w-3/4">
-            <div className="flex w-full flex-wrap justify-center gap-10 ">
+          ) : (
+            <div className="ml-10 flex w-full flex-wrap justify-center gap-10">
               {searchResults.map(({ id, name, sprites, types }) => {
                 const isLiked = likedPokemons[id] || false;
 
@@ -203,8 +201,8 @@ const PokemonPage = () => {
                 <button className="btn btn-blue">Load more</button>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
