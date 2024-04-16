@@ -28,7 +28,7 @@ body {
   }
 
   .btn-pagination {
-    @apply m-1 h-12 w-12 rounded font-bold text-white
+    @apply m-1 h-10 w-10 rounded font-bold text-white
   }
 
   .btn-pagination:hover {

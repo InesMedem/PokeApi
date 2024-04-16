@@ -49,30 +49,9 @@ const PokedexSection = ({ selectedPokemon }) => {
             alt={selectedPokemon.name}
             className=" animate-bounce"
           />
-          {/* <div className="flex justify-between">
-           
-            <img
-              src={selectedPokemon.sprites.back_default}
-              alt={selectedPokemon.name}
-              className="w-40"
-            />
-          </div> */}
 
-          <h3 className="font-bold uppercase">Type</h3>
           <div>
-            {selectedPokemon.types.map((typeData, i) => (
-              <button
-                key={i}
-                className="m-1.5 w-24 rounded-lg py-2 font-bold capitalize text-white"
-                style={{
-                  backgroundColor: typeColors[typeData.type.name].color,
-                }}
-              >
-                {typeData.type.name}
-              </button>
-            ))}
-
-            <p className=" uppercase">Weaknesses</p>
+            <p className="">type</p>
             {selectedPokemon.types.map((typeData, i) => (
               <button
                 key={i}
@@ -85,6 +64,7 @@ const PokedexSection = ({ selectedPokemon }) => {
               </button>
             ))}
           </div>
+          <p className=" uppercase">Weaknesses</p>
 
           <div>
             {typeWeaknesses.map((weakness, i) => (
