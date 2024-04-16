@@ -148,8 +148,8 @@ const PokemonPage = () => {
   return (
     <>
       <div className="flex">
-        <section className="flex flex-col items-center gap-10 rounded-xl bg-slate-300 p-10 py-10 lg:w-1/4">
-          <h1 className=" text-blue-500">Welcome to the PokeAPi</h1>
+        <section className="flex flex-col items-center gap-10 bg-slate-300 p-10 py-10 lg:w-1/5">
+          <h2 className=" text-blue-500">Welcome to the PokeAPi</h2>
           <p className="font-normal">
             The Pokémon franchise is set in a world in which humans coexist with
             creatures known as Pokémon. Pokémon Red and Blue contain 151 Pokémon
@@ -177,11 +177,11 @@ const PokemonPage = () => {
           />
         </section>
 
-        <div className="flex flex-col justify-center lg:w-3/4">
+        <div className="flex flex-col justify-center px-5 py-11 lg:w-3/4">
           {loading ? (
             <Spinner />
           ) : (
-            <div className="flex w-full flex-wrap justify-center gap-10">
+            <div className="flex w-full flex-wrap justify-center gap-11">
               {searchResults.map(({ id, name, sprites, types }) => {
                 const isLiked = likedPokemons[id] || false;
 
@@ -206,7 +206,7 @@ const PokemonPage = () => {
             <button className="btn-surprise">Load more</button>
           </div>
         </div>
-        <section>
+        <section className="py-11 pr-10">
           <>
             {selectedPokemon && (
               <PokedexSection selectedPokemon={selectedPokemon} types={types} />

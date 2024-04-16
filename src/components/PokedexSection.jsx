@@ -40,27 +40,23 @@ const PokedexSection = ({ selectedPokemon }) => {
   return (
     <>
       {selectedPokemon && (
-        <div
-          className="p-30 flex w-full flex-col rounded-xl bg-white p-5 text-center shadow-lg"
-          // style={{
-          //   border: `${typeColors[types[0].type.name].color} 5px solid`,
-          // }}
-        >
+        <div className="p-30 flex  w-72 flex-col rounded-xl bg-white p-5 text-center shadow-lg">
           <h2 className="text-2xl font-bold uppercase">
             {selectedPokemon.name}
           </h2>
-          <div className="flex justify-between">
-            <img
-              src={selectedPokemon.sprites.front_default}
-              alt={selectedPokemon.name}
-              className="w-40"
-            />
+          <img
+            src={selectedPokemon.sprites.front_default}
+            alt={selectedPokemon.name}
+            className=" animate-bounce"
+          />
+          {/* <div className="flex justify-between">
+           
             <img
               src={selectedPokemon.sprites.back_default}
               alt={selectedPokemon.name}
               className="w-40"
             />
-          </div>
+          </div> */}
 
           <h3 className="font-bold uppercase">Type</h3>
           <div>
