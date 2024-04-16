@@ -151,28 +151,26 @@ const PokemonPage = () => {
   return (
     <>
       <div className="flex">
-        <section className="flex w-full flex-col items-center rounded-xl bg-slate-300 p-10 py-10 lg:w-1/4">
-          <div>
-            <p>
-              The first generation of Pokémon began in 1996, introducing the
-              first 151 Pokémon of the series. Pokémon Red, Pokémon Green,
-              Pokémon Blue and Pokémon Yellow are the core franchise games of
-              the first generation
-            </p>
-            <SearchFunction setSearchQuery={setSearchQuery} />
-            <button className="btn-surprise">
-              <span className="material-symbols-outlined">autorenew</span>
-              Surprise me
-            </button>
-            <Pagination
-              pageNumbers={pageNumbers}
-              handlePageChange={handlePageChange}
-              currentPage={currentPage}
-            />
-            {selectedPokemon && (
-              <PokedexSection selectedPokemon={selectedPokemon} types={types} />
-            )}
-          </div>
+        <section className="flex flex-col items-center gap-5 rounded-xl bg-slate-300 p-10 py-10 lg:w-1/4">
+          <p>
+            The first generation of Pokémon began in 1996, introducing the first
+            151 Pokémon of the series. Pokémon Red, Pokémon Green, Pokémon Blue
+            and Pokémon Yellow are the core franchise games of the first
+            generation
+          </p>
+          <SearchFunction setSearchQuery={setSearchQuery} />
+          <button className="btn-surprise">
+            <span className="material-symbols-outlined">autorenew</span>
+            Surprise me
+          </button>
+          <Pagination
+            pageNumbers={pageNumbers}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+          />
+          {selectedPokemon && (
+            <PokedexSection selectedPokemon={selectedPokemon} types={types} />
+          )}
         </section>
         <div className="flex justify-center lg:w-3/4">
           {loading ? (

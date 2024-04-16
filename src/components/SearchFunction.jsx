@@ -4,9 +4,9 @@ const SearchFunction = ({ setSearchQuery }) => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="w-full">
       <input
-        className="rounded-full p-3 font-bold"
+        className="w-full rounded-lg p-3 font-bold"
         type="text"
         onChange={handleSearch}
         placeholder="Search a Pokemon..."
