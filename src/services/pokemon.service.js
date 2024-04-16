@@ -4,7 +4,7 @@ import { axiosUtil } from "../utils/axiosUtil";
 export const getAllPokemon = async (offset, limit) => {
   try {
     const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+      `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`,
     );
 
     return response.data;
@@ -30,5 +30,17 @@ export const getByTypePokemon = async () => {
   } catch (error) {
     console.error("Error fetching Pokémon types:", error);
     return [];
+  }
+};
+
+export const getByTypeDetails = async (typeName) => {
+  try {
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/type/${typeName}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching type details:", error);
+    return null;
   }
 };

@@ -1,6 +1,42 @@
+import { useEffect, useState } from "react";
 import typeColors from "../utils/typeColors";
+import { getByIdPokemon, getByTypeDetails } from "../services/pokemon.service";
 
 const PokedexSection = ({ selectedPokemon }) => {
+  const [prevPokemonId, setPrevPokemonId] = useState(null);
+  const [nextPokemonId, setNextPokemonId] = useState(null);
+  const [typeWeaknesses, setTypeWeaknesses] = useState([]);
+
+  useEffect(() => {
+    const fetchAdjacentPokemon = async () => {
+      if (selectedPokemon) {
+        const currPokemonId = selectedPokemon.id;
+        const prevId = currPokemonId > 1 ? currPokemonId - 1 : null;
+        const nextId = currPokemonId + 1;
+
+        setPrevPokemonId(prevId);
+        setNextPokemonId(nextId);
+
+        const typeData = await getByTypeDetails(
+          selectedPokemon.types[0].type.name,
+        );
+        setTypeWeaknesses(typeData.damage_relations.double_damage_from);
+      }
+    };
+
+    fetchAdjacentPokemon();
+  }, [selectedPokemon]);
+
+  const handlePrevClick = async () => {
+    if (prevPokemonId !== null) {
+      const prevPokemon = await getByIdPokemon(prevPokemonId);
+    }
+  };
+
+  const handleNextClick = async () => {
+    const nextPokemon = await getByIdPokemon(nextPokemonId);
+  };
+
   return (
     <>
       {selectedPokemon && (
@@ -54,10 +90,34 @@ const PokedexSection = ({ selectedPokemon }) => {
             ))}
           </div>
 
+          <div>
+            {typeWeaknesses.map((weakness, i) => (
+              <button
+                key={i}
+                className="m-1.5 w-24 rounded-lg py-2 capitalize text-white"
+                style={{
+                  backgroundColor: typeColors[weakness.name].color,
+                }}
+              >
+                {weakness.name}
+              </button>
+            ))}
+          </div>
+
           <p>Weight: {selectedPokemon.weight}</p>
           <p>Height: {selectedPokemon.height}</p>
         </div>
       )}
+      <div className="flex gap-2">
+        <button className="btn-surprise" onClick={handlePrevClick}>
+          <span className="material-symbols-outlined">arrow_back_ios_new</span>
+          PREV.
+        </button>
+        <button className="btn-surprise" onClick={handleNextClick}>
+          NEXT
+          <span className="material-symbols-outlined">arrow_forward_ios</span>
+        </button>
+      </div>
     </>
   );
 };

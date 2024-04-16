@@ -38,15 +38,6 @@ const PokemonPage = () => {
 
   //! -------------------- FETCH DATA ----------------
 
-  // const fetchPokemonData = async (startIndex, endIndex) => {
-  //   const pokemonData = [];
-  //   for (let i = startIndex; i <= endIndex; i++) {
-  //     const pokemonInfo = await getByIdPokemon(i);
-  //     pokemonData.push(pokemonInfo);
-  //   }
-  //   return pokemonData;
-  // };
-
   const fetchPokemonData = async (startIndex, endIndex) => {
     const offset = startIndex - 1; // Adjust for 0-based index in API
     const limit = endIndex - startIndex + 1; // Number of pokemons to fetch
@@ -216,9 +207,11 @@ const PokemonPage = () => {
           </div>
         </div>
         <section>
-          {selectedPokemon && (
-            <PokedexSection selectedPokemon={selectedPokemon} types={types} />
-          )}
+          <>
+            {selectedPokemon && (
+              <PokedexSection selectedPokemon={selectedPokemon} types={types} />
+            )}
+          </>
         </section>
       </div>
     </>
