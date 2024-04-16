@@ -1,5 +1,6 @@
 import typeColors from "../utils/typeColors";
 import LikeButton from "./LikeButton";
+import PropTypes from "prop-types";
 
 const PokemonCard = ({
   id,
@@ -38,6 +39,22 @@ const PokemonCard = ({
       <LikeButton isLiked={isLiked} onToggleLike={() => handleToggleLike(id)} />
     </div>
   );
+};
+
+PokemonCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  sprites: PropTypes.object.isRequired,
+  types: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+    }),
+  ).isRequired,
+  onClick: PropTypes.func.isRequired,
+  isLiked: PropTypes.bool.isRequired,
+  handleToggleLike: PropTypes.func.isRequired,
 };
 
 export default PokemonCard;
