@@ -204,9 +204,6 @@ const PokemonPage = () => {
               })}
             </div>
           )}
-          <div className="m-10">
-            <button className="btn-surprise">Load more</button>
-          </div>
         </div>
         <section className="py-11 pr-10">
           <>
