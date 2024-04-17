@@ -84,16 +84,6 @@ const PokedexSection = ({ selectedPokemon }) => {
           <p>Height: {selectedPokemon.height}</p>
         </div>
       )}
-      <div className="flex gap-2">
-        <button className="btn-surprise" onClick={handlePrevClick}>
-          <span className="material-symbols-outlined">arrow_back_ios_new</span>
-          PREV.
-        </button>
-        <button className="btn-surprise" onClick={handleNextClick}>
-          NEXT
-          <span className="material-symbols-outlined">arrow_forward_ios</span>
-        </button>
-      </div>
     </>
   );
 };
