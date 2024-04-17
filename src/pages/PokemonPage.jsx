@@ -23,7 +23,7 @@ const PokemonPage = () => {
   //* Pagination + Loading
   const [currentPage, setCurrentPage] = useState(1);
   const pokemonsPerPage = 17;
-  const totalPokemon = 1000;
+  const totalPokemon = 1025;
 
   const [loading, setLoading] = useState(true);
   const [types, setTypes] = useState([]);
@@ -31,9 +31,7 @@ const PokemonPage = () => {
 
   //* Pokemons (grid)
   const [pokemon, setPokemon] = useState([]);
-  console.log("🚀 ~ PokemonPage ~ pokemon:", pokemon);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
-  console.log("🚀 ~ PokemonPage ~ selectedPokemon:", selectedPokemon);
 
   //* likeButton
   const [likedPokemons, setLikedPokemons] = useState({});
