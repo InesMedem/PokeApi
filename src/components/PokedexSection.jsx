@@ -3,20 +3,11 @@ import typeColors from "../utils/typeColors";
 import { getByIdPokemon, getByTypeDetails } from "../services/pokemon.service";
 
 const PokedexSection = ({ selectedPokemon }) => {
-  const [prevPokemonId, setPrevPokemonId] = useState(null);
-  const [nextPokemonId, setNextPokemonId] = useState(null);
   const [typeWeaknesses, setTypeWeaknesses] = useState([]);
 
   useEffect(() => {
-    const fetchAdjacentPokemon = async () => {
+    const fetchTypeWeaknesses = async () => {
       if (selectedPokemon) {
-        const currPokemonId = selectedPokemon.id;
-        const prevId = currPokemonId > 1 ? currPokemonId - 1 : null;
-        const nextId = currPokemonId + 1;
-
-        setPrevPokemonId(prevId);
-        setNextPokemonId(nextId);
-
         const typeData = await getByTypeDetails(
           selectedPokemon.types[0].type.name,
         );
@@ -24,18 +15,8 @@ const PokedexSection = ({ selectedPokemon }) => {
       }
     };
 
-    fetchAdjacentPokemon();
+    fetchTypeWeaknesses();
   }, [selectedPokemon]);
-
-  const handlePrevClick = async () => {
-    if (prevPokemonId !== null) {
-      const prevPokemon = await getByIdPokemon(prevPokemonId);
-    }
-  };
-
-  const handleNextClick = async () => {
-    const nextPokemon = await getByIdPokemon(nextPokemonId);
-  };
 
   return (
     <>
@@ -44,6 +25,8 @@ const PokedexSection = ({ selectedPokemon }) => {
           <h2 className="text-2xl font-bold uppercase">
             {selectedPokemon.name}
           </h2>
+          <p className="font-light"> #{selectedPokemon.id}</p>
+
           <img
             src={selectedPokemon.sprites.front_default}
             alt={selectedPokemon.name}
@@ -51,7 +34,7 @@ const PokedexSection = ({ selectedPokemon }) => {
           />
 
           <div>
-            <p className="">type</p>
+            <p className="uppercase">type</p>
             {selectedPokemon.types.map((typeData, i) => (
               <button
                 key={i}
@@ -79,9 +62,31 @@ const PokedexSection = ({ selectedPokemon }) => {
               </button>
             ))}
           </div>
-
-          <p>Weight: {selectedPokemon.weight}</p>
-          <p>Height: {selectedPokemon.height}</p>
+          <p>Weight: {selectedPokemon.weight}lbs </p>
+          <p>Height: {selectedPokemon.height}'' </p>
+          <p>Abilities: {selectedPokemon.height} </p>
+          <p>CategorySeed: {selectedPokemon.height} </p>
+          <div>
+            <h3>Moves:</h3>
+            <ul>
+              {selectedPokemon.moves.map((move, index) => (
+                <li key={index}>{move.move.name}</li>
+              ))}
+            </ul>
+            <div>
+              <h3>Abilities:</h3>
+              <ul>
+                {selectedPokemon.abilities.map((abilityData, index) => (
+                  <li key={index}>
+                    <strong>
+                      {abilityData.is_hidden ? "Hidden Ability: " : "Ability: "}
+                    </strong>
+                    {abilityData.ability.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       )}
     </>

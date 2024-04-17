@@ -9,7 +9,7 @@ const SearchFunction = ({ setSearchQuery }) => {
         className="w-full rounded-lg p-3 font-bold"
         type="text"
         onChange={handleSearch}
-        placeholder="Search a Pokemon..."
+        placeholder="Search page..."
       />
     </button>
   );
