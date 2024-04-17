@@ -7,6 +7,10 @@ body {
 
 }
 
+.tags {
+  @apply m-1.5 w-24 rounded-lg py-2 capitalize text-white
+}
+
 .btn-surprise {
   @apply font-bold rounded-lg flex items-center justify-center text-white py-2 w-full bg-blue-500 gap-2 uppercase h-12
 }
@@ -56,8 +60,16 @@ h3 {
   @apply font-semibold text-lg uppercase text-gray-900
 }
 
+h4 {
+  @apply uppercase text-gray-900 font-semibold
+}
+
 p {
   @apply font-bold text-gray-900
+}
+
+li {
+  list-style-type: none;
 }
 
   @keyframes bounce {

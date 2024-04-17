@@ -27,7 +27,7 @@ const PokemonCard = ({
         {types.map((typeData, i) => (
           <button
             key={i}
-            className="m-1.5 rounded-lg px-3 py-2 font-bold capitalize text-white"
+            className="tags"
             style={{
               backgroundColor: typeColors[typeData.type.name].color,
             }}

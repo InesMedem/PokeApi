@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import typeColors from "../utils/typeColors";
-import { getByIdPokemon, getByTypeDetails } from "../services/pokemon.service";
+import PropTypes from "prop-types";
+import { getByTypeDetails } from "../services/pokemon.service";
 
 const PokedexSection = ({ selectedPokemon }) => {
   const [typeWeaknesses, setTypeWeaknesses] = useState([]);
+  const weightInKilograms = (selectedPokemon.weight * 0.1).toFixed(1); // Convert hectograms to kilograms and limit to 1 decimal place
+  const heightInMeters = (selectedPokemon.height * 0.1).toFixed(1); // Convert decimetres to meters and limit to 1 decimal place
 
   useEffect(() => {
     const fetchTypeWeaknesses = async () => {
@@ -21,24 +24,22 @@ const PokedexSection = ({ selectedPokemon }) => {
   return (
     <>
       {selectedPokemon && (
-        <div className="p-30 flex  w-72 flex-col rounded-xl bg-white p-5 text-center shadow-lg">
+        <div className="p-30 flex w-72 flex-col rounded-xl bg-white p-5 text-center shadow-lg">
           <h2 className="text-2xl font-bold uppercase">
             {selectedPokemon.name}
           </h2>
           <p className="font-light"> #{selectedPokemon.id}</p>
-
           <img
             src={selectedPokemon.sprites.front_default}
             alt={selectedPokemon.name}
             className=" animate-bounce"
           />
-
           <div>
-            <p className="uppercase">type</p>
+            <h4>type</h4>
             {selectedPokemon.types.map((typeData, i) => (
               <button
                 key={i}
-                className="m-1.5 w-24 rounded-lg py-2 capitalize text-white"
+                className="tags"
                 style={{
                   backgroundColor: typeColors[typeData.type.name].color,
                 }}
@@ -46,14 +47,11 @@ const PokedexSection = ({ selectedPokemon }) => {
                 {typeData.type.name}
               </button>
             ))}
-          </div>
-          <p className=" uppercase">Weaknesses</p>
-
-          <div>
+            <h4>Weaknesses</h4>
             {typeWeaknesses.map((weakness, i) => (
               <button
                 key={i}
-                className="m-1.5 w-24 rounded-lg py-2 capitalize text-white"
+                className="tags"
                 style={{
                   backgroundColor: typeColors[weakness.name].color,
                 }}
@@ -62,35 +60,58 @@ const PokedexSection = ({ selectedPokemon }) => {
               </button>
             ))}
           </div>
-          <p>Weight: {selectedPokemon.weight}lbs </p>
-          <p>Height: {selectedPokemon.height}'' </p>
-          <p>Abilities: {selectedPokemon.height} </p>
-          <p>CategorySeed: {selectedPokemon.height} </p>
-          <div>
-            <h3>Moves:</h3>
+          <div className="m-2 rounded-lg bg-gray-200 p-5">
+            <h4>Physical Attributes</h4>
+            <div className="flex justify-center">
+              <p className="tags bg-blue-500">{heightInMeters}m</p>
+              <p className="tags bg-blue-500">{weightInKilograms}kg</p>
+            </div>
+            <h4>Abilities:</h4>
+            {selectedPokemon.abilities.map((abilityData, index) => (
+              <li key={index} className="capitalize">
+                {abilityData.is_hidden ? "hidden: " : " "}
+                {abilityData.ability.name}
+              </li>
+            ))}
+            {/* <h4>Category:</h4> {selectedPokemon.height} */}
+            {/* <h4>Moves:</h4>
             <ul>
               {selectedPokemon.moves.map((move, index) => (
                 <li key={index}>{move.move.name}</li>
               ))}
-            </ul>
-            <div>
-              <h3>Abilities:</h3>
-              <ul>
-                {selectedPokemon.abilities.map((abilityData, index) => (
-                  <li key={index}>
-                    <strong>
-                      {abilityData.is_hidden ? "Hidden Ability: " : "Ability: "}
-                    </strong>
-                    {abilityData.ability.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </ul> */}
           </div>
         </div>
       )}
     </>
   );
+};
+
+PokedexSection.propTypes = {
+  selectedPokemon: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    weight: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    sprites: PropTypes.shape({
+      front_default: PropTypes.string.isRequired,
+    }),
+    types: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+        }).isRequired,
+      }).isRequired,
+    ).isRequired,
+    abilities: PropTypes.arrayOf(
+      PropTypes.shape({
+        ability: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+        }).isRequired,
+        is_hidden: PropTypes.bool.isRequired,
+      }).isRequired,
+    ).isRequired,
+  }),
 };
 
 export default PokedexSection;
