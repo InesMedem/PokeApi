@@ -1,6 +1,7 @@
 import typeColors from "../utils/typeColors";
 import LikeButton from "./LikeButton";
 import PropTypes from "prop-types";
+import "./pokemonCard.css";
 
 const PokemonCard = ({
   id,
@@ -22,7 +23,7 @@ const PokemonCard = ({
     >
       <h3>{name}</h3>
       <p className="font-light"> #{id}</p>
-      <img src={sprites.front_default} alt={name} className="animate-bounce" />
+      <img src={sprites.front_default} alt={name} className="rebota" />
       <div>
         {types.map((typeData, i) => (
           <button

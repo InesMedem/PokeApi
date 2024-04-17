@@ -1,0 +1,6 @@
+
+@keyframes rebota {
+    100% {
+      transform: translateY(5px);
+    }
+  }
